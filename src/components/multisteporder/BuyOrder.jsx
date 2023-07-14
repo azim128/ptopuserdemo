@@ -52,6 +52,9 @@ const BuyOrder = () => {
       try {
         const response = await fetch(`http://${serverUrl}/api/order/create-order/?Accept=application/json&access_token=${authTokens?.token.access}`, {
           method: 'POST',
+          headers: {
+            "Content-Type": "application/json",
+          },
           body: JSON.stringify(formData),
         });
   
