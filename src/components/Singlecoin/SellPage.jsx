@@ -1,4 +1,5 @@
-'ues client'
+/* eslint-disable react-hooks/rules-of-hooks */
+"use client";
 import { Container, Row } from "react-bootstrap";
 import BasicNavbar from "../Navbar";
 import styles from '@/components/Singlecoin/sellBuyPage.module.css'

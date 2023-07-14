@@ -1,9 +1,7 @@
 'use client'
 import BasicNavbar from "@/components/Navbar"
 import React, { useEffect, useState } from 'react';
-export const metadata={
-  title:'About-PTOP'
-}
+
 
 
 

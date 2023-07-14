@@ -1,5 +1,4 @@
-/* eslint-disable react-hooks/rules-of-hooks */
-"use client";
+
 import BuyPage from "@/components/Singlecoin/BuyPage";
 import SellPage from "@/components/Singlecoin/SellPage";
 const serverUrl = process.env.NEXT_PUBLIC_SERVER_URL;
@@ -22,11 +21,9 @@ export async function generateMetadata({ params: { id },searchParams }) {
 const page = async({ params: { id },searchParams }) => {
   const data = coindata(id)
     const singleCoin = await data;
-    // const search = searchParams.get("page");
-    // console.log(search);
+   
     const {page}=searchParams
-    // console.log(page)
-    // console.log(singleCoin)
+  
   return <>
      
 
