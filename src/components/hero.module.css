@@ -1,0 +1,11 @@
+.section1{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 91vh;
+}
+@media (min-width: 992px) {
+  .herocontentLeft {
+    text-align: left !important;
+  }
+}

@@ -1,95 +1,66 @@
-import Image from 'next/image'
-import styles from './page.module.css'
+import Hero from "@/components/Hero";
+import BasicNavbar from "@/components/Navbar";
+import Link from "next/link";
+import { Col, Container, Row } from "@/components/ReactBootstrap";
+import CardBox from "@/components/coinCard/CardBox";
+import Footer from "@/components/Footer";
 
-export default function Home() {
+const serverUrl = process.env.NEXT_PUBLIC_SERVER_URL;
+
+export default async function Home() {
+  const data = await getData()
+  console.log(data)
   return (
-    <main className={styles.main}>
-      <div className={styles.description}>
-        <p>
-          Get started by editing&nbsp;
-          <code className={styles.code}>src/app/page.js</code>
-        </p>
-        <div>
-          <a
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{' '}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className={styles.vercelLogo}
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
-        </div>
+    <>
+      <header>
+        <BasicNavbar />
+      </header>
+      <Hero />
+      <div className="bg-primary bg-gradient text-white  position-relative">
+        <div className="position-absolute bg-info py-2 px-5 marquee">AlERT</div>
+        <marquee className="py-2 d-flex align-items-center">
+          “NOONES” is a trademark of Eaton Consulting FZE. Eaton Consulting
+          FZE has no relation to MoneyGram, Western Union, Payoneer,
+          WorldRemit, Paxum, PayPal, Amazon, OkPay, Payza, Walmart, Reloadit,
+          Perfect Money, WebMoney, Google Wallet, BlueBird, Serve, Square
+          Cash,NetSpend, Chase QuickPay, Skrill, Vanilla, MyVanilla,
+          OneVanilla, Neteller, Venmo, Apple, ChimpChange or any other payment
+          method. We make no claims about being supported by or supporting
+          these services. Their respective wordmarks and trademarks belong to
+          them alone. Official mailing address:BIZ00318 Compass Building, Al
+          Shohada Road, AL Hamra Industrial Zone-FZ, Ras Al Khaimah, United
+          Arab Emirates
+        </marquee>
       </div>
+      <Container className="my-5 py-5">
+        <Row className="justify-content-center">
+          {data?.map((coin) => (
+            <Col key={coin.id} sm={6} md={4} lg={3} className="mb-3">
+              <CardBox
+                coinImg={coin.icon}
+                coinName={coin.name}
+                coinbuyPrice={coin.buy_rate}
+                coinsellPrice={coin.sell_rate}
+                coinLink={coin.id} />
+            </Col>
+          ))}
+        </Row>
+      </Container>
+      <Footer/>
 
-      <div className={styles.center}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
 
-      <div className={styles.grid}>
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Docs <span>-&gt;</span>
-          </h2>
-          <p>Find in-depth information about Next.js features and API.</p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Learn <span>-&gt;</span>
-          </h2>
-          <p>Learn about Next.js in an interactive course with&nbsp;quizzes!</p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Templates <span>-&gt;</span>
-          </h2>
-          <p>Explore the Next.js 13 playground.</p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Deploy <span>-&gt;</span>
-          </h2>
-          <p>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
+    </>
   )
+}
+
+
+async function getData() {
+  const res = await fetch(`https://${serverUrl}/api/payment/all-method/`, { next: { revalidate: 10 } })
+
+  if (!res.ok) {
+    // This will activate the closest `error.js` Error Boundary
+    throw new Error('Failed to fetch data')
+  }
+
+  return res.json()
 }
