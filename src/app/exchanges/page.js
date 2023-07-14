@@ -5,10 +5,9 @@ import BuyOrder from "@/components/multisteporder/BuyOrder"
 import SellOrder from "@/components/multisteporder/SellOrder"
 import AuthContext from "@/context/AuthContext"
 import PrivateRoute from "@/helper/PrivateRoute"
-import Link from "next/link"
 import { useSearchParams } from 'next/navigation'
 import { useContext, useEffect, useState } from "react"
-
+const serverUrl = process.env.NEXT_PUBLIC_SERVER_URL;
 const page = () => {
   
 const searchParams = useSearchParams()
