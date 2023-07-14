@@ -36,7 +36,7 @@ console.log(authTokens)
     
     
   };
-  const { data, error } = useSWR(authTokens ?`http://${serverUrl}/api/user/messages/${user?.name}_Payoneer/?Accept=application/json&access_token=${authTokens?.token.access}/`:null, fetcher);
+  const { data, error } = useSWR(authTokens ?`https://${serverUrl}/api/user/messages/${user?.name}_Payoneer/?Accept=application/json&access_token=${authTokens?.token.access}/`:null, fetcher);
    console.log(data)
 
 
