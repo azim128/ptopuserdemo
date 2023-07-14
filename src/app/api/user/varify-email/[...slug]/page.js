@@ -1,10 +1,10 @@
-'use client'
+"use client"
 
 import { usePathname, useRouter } from "next/navigation";
 import {toast} from "react-toastify"
 const serverUrl = process.env.NEXT_PUBLIC_SERVER_URL;
 
-const page = async() => {
+const Page = async() => {
     const router = useRouter();
   const pathname = usePathname();
 
@@ -37,4 +37,4 @@ const page = async() => {
   )
 }
 
-export default page
+export default Page
