@@ -1,13 +1,13 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 'use client'
-import ChatWrapper from "@/components/Chat/ChatWraper"
+
 import BuyOrder from "@/components/multisteporder/BuyOrder"
 import SellOrder from "@/components/multisteporder/SellOrder"
 import AuthContext from "@/context/AuthContext"
 import PrivateRoute from "@/helper/PrivateRoute"
 import Link from "next/link"
 import { useSearchParams } from 'next/navigation'
-import { useContext } from "react"
+import { useContext, useEffect, useState } from "react"
 
 const page = () => {
   
@@ -60,8 +60,7 @@ const searchParams = useSearchParams()
 
   return (
     <PrivateRoute>
-        <Link href={'/exchanges?page=sell'}>Sell</Link>
-        <Link href={'/exchanges?page=buy'}>Buy</Link>
+       
         {search==='sell'&&<SellOrder/>}
         {search==='buy'&&<BuyOrder/>}
         
