@@ -10,6 +10,7 @@ const serverUrl = process.env.NEXT_PUBLIC_SERVER_URL;
 const Chatbody = () => {
   const {authTokens,user} = useContext(AuthContext)
   const [messages, setMessages] = useState([]);
+  console.log(messages)
   const [messageInputValue, setMessageInputValue] = useState("");
   const socketRef = useRef(null);
   const ref = useRef();
@@ -26,7 +27,7 @@ const Chatbody = () => {
           .then((data) => setMessages(data))
           .catch((error) => console.error("Error fetching messages:", error));
       }
-    },[])  
+    },[user])  
 
   useEffect(() => {
     
