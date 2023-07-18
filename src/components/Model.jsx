@@ -36,7 +36,7 @@ function ModalBox({title}) {
           <h3  className='me-2 my-4'>
             Sell via Web
           </h3>
-          <Link href="/exchanges?page=sell"  className='btn btn-outline-success'>
+          <Link href="/chat"  className='btn btn-outline-success'>
             Order Now
           </Link>
         </Modal.Title>

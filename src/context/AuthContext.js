@@ -16,29 +16,6 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
 
 
-console.log(authTokens)
-  const headers = {
-    Authorization: `Bearer ${authTokens?.token.access}`,
-    Accept:'application/json'
-  };
-
-  const fetcher = async (url) => {
-    try {
-      const res = await fetch(url);
-      if (!res.ok) {
-        throw new Error('Failed to fetch resource');
-      }
-      const data = await res.json();
-    return data;
-    } catch (error) {
-      
-    }
-    
-    
-  };
-  const { data, error } = useSWR(authTokens ?`https://${serverUrl}/api/user/messages/${user?.name}_Payoneer/?Accept=application/json&access_token=${authTokens?.token.access}/`:null, fetcher);
-   console.log(data)
-
 
 
   useEffect(() => {
@@ -171,7 +148,8 @@ console.log(authTokens)
     router.push("/profile?page=signin");
   };
 
-  const {ordermassage,setOrderMessage}= useState(null)
+  const [ordermassage, setOrderMessage] = useState(null);
+
 
   return (
     <AuthContext.Provider
@@ -181,7 +159,7 @@ console.log(authTokens)
         loginUser,
         logoutUser,
         handleSignup,
-        chatdata:data,
+        
         ordermassage,
         setOrderMessage
       }}

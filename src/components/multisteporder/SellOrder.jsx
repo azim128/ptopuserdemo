@@ -51,25 +51,25 @@ const SellOrder = () => {
       .map(key => `${key}: ${formData[key]}`)
       .join(' , ');
 
-      try {
-        const response = await fetch(`https://${serverUrl}/api/order/create-order/?Accept=application/json&access_token=${authTokens?.token.access}`, {
-          method: 'POST',
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(formData),
-        });
+      // try {
+      //   const response = await fetch(`https://${serverUrl}/api/order/create-order/?Accept=application/json&access_token=${authTokens?.token.access}`, {
+      //     method: 'POST',
+      //     headers: {
+      //       "Content-Type": "application/json",
+      //     },
+      //     body: JSON.stringify(formData),
+      //   });
   
-        if (response.ok) {
-          toast.success('Order created successfully');
-          setOrderMessage(formDataString)
-        } else {
-          const errorData = await response.json();
-          toast.error(`Failed to create order: ${errorData.message}`);
-        }
-      } catch (error) {
-        toast.error('An error occurred while creating the order');
-      }
+      //   if (response.ok) {
+      //     toast.success('Order created successfully');
+      //     setOrderMessage(formDataString)
+      //   } else {
+      //     const errorData = await response.json();
+      //     toast.error(`Failed to create order: ${errorData.message}`);
+      //   }
+      // } catch (error) {
+      //   toast.error('An error occurred while creating the order');
+      // }
 
       router.push('/chat')
     } else {
