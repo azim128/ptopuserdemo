@@ -33,7 +33,7 @@ const Chatbody = () => {
     
     
     if (authTokens && user) {
-      const socketUrl = `wss://${serverUrl}/ws/chat/${user?.name}/Payoneer/?${authTokens?.token.access}`;
+      const socketUrl = `wss://${serverUrl}/ws/chat/${user?.name}_Payoneer/?${authTokens?.token.access}`;
       const socket  = new WebSocket(socketUrl);
 
       socket.onopen = () => {

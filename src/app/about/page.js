@@ -11,7 +11,7 @@ function WebSocketClient() {
   const [inputValue, setInputValue] = useState('');
 
   useEffect(() => {
-    const socket = new WebSocket('wss://p2p-server-l9qu.onrender.com/ws/chat/AzMkdty/Payoneer/?eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjg5MTc3ODE5LCJpYXQiOjE2ODc4ODE4MTksImp0aSI6ImNjNjE5NGQzOTk1ZDQwM2I5ZGIzYTU3OTg3M2Q1YTViIiwidXNlcl9pZCI6MX0.5OGBoV2WNy0rLl3F_Zo3MRDOtZWsZUcDE2T8UI8bSy4');
+    const socket = new WebSocket('wss://p2p-server-l9qu.onrender.com/ws/chat/Azim876/Payoneer/?eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjkxMDg0OTIyLCJpYXQiOjE2ODk3ODg5MjIsImp0aSI6IjU5MzM2OTVkYjU4NTQ5OGM5ZjEzNGNhNjY1ZjQ1NzNkIiwidXNlcl9pZCI6OH0.q8QGw3xPo1g8uPTDs5W28QzQTAPgQ0wMeDkVghA_-gk');
 
     socket.addEventListener('open', () => {
       console.log('WebSocket connection established.');
