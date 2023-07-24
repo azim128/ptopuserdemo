@@ -13,6 +13,7 @@ export const AuthProvider = ({ children }) => {
   const router = useRouter();
 
   const [authTokens, setAuthTokens] = useState(null);
+  const [tokens, setTokens] = useState(null);
   const [user, setUser] = useState(null);
 
 
@@ -21,10 +22,12 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     const storedAuthTokens = Cookies.get("authToken");
     const storedUser = Cookies.get("user");
+    const storedToken = Cookies.get("token");
 
     if (storedAuthTokens && storedUser) {
       setAuthTokens(JSON.parse(storedAuthTokens));
       setUser(JSON.parse(storedUser));
+      setTokens(JSON.parse(storedToken))
     }
   }, []);
 
@@ -156,6 +159,7 @@ export const AuthProvider = ({ children }) => {
       value={{
         authTokens,
         user,
+        tokens,
         loginUser,
         logoutUser,
         handleSignup,

@@ -1,57 +1,111 @@
-'use client'
-import BasicNavbar from "@/components/Navbar"
-import React, { useEffect, useState } from 'react';
-
-
-
+"use client";
+import BasicNavbar from "@/components/Navbar";
+import AuthContext from "@/context/AuthContext";
+import React, { useContext, useEffect, useState } from "react";
 
 function WebSocketClient() {
+  const { user, tokens } = useContext(AuthContext);
+
   const [socket, setSocket] = useState(null);
   const [messages, setMessages] = useState([]);
-  const [inputValue, setInputValue] = useState('');
+  const [inputValue, setInputValue] = useState("");
+
+
 
   useEffect(() => {
-    const socket = new WebSocket('wss://p2p-server-l9qu.onrender.com/ws/chat/Azim876/Payoneer/?eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjkxMDg0OTIyLCJpYXQiOjE2ODk3ODg5MjIsImp0aSI6IjU5MzM2OTVkYjU4NTQ5OGM5ZjEzNGNhNjY1ZjQ1NzNkIiwidXNlcl9pZCI6OH0.q8QGw3xPo1g8uPTDs5W28QzQTAPgQ0wMeDkVghA_-gk');
+    if (user && tokens) {
+      const fetchMessages = async () => {
+        try {
+          const response = await fetch(
+            `https://p2p-server-l9qu.onrender.com/api/user/messages/${user?.name}_Payoneer/?Accept=application/json&access_token=${tokens}`
+          );
+          if (!response.ok) {
+            throw new Error("Failed to fetch messages");
+          }
+          const data = await response.json();
+          setMessages(data);
 
-    socket.addEventListener('open', () => {
-      console.log('WebSocket connection established.');
-    });
+          // Now that you have the data, you can proceed with the WebSocket connection
+          establishWebSocketConnection();
+        } catch (error) {
+          console.error("Error fetching messages:", error);
+        }
+      };
 
-    socket.addEventListener('message', (event) => {
-      const message = event.data;
-      console.log('Received message:', message);
-      setMessages((prevMessages) => [...prevMessages, message]);
-    });
-
-    socket.addEventListener('close', () => {
-      console.log('WebSocket connection closed.');
-    });
-
-    setSocket(socket);
-
+      fetchMessages();
+    }
     return () => {
-      socket.close();
+      if (socket && socket.readyState === WebSocket.OPEN) {
+        socket.close();
+      }
     };
-  }, []);
+  }, [tokens, user]);
 
-  const sendMessage = () => {
-    if (!socket) return;
+  const establishWebSocketConnection = () => {
+    try {
+      const socket = new WebSocket(
+        `wss://p2p-server-l9qu.onrender.com/ws/chat/${user.name}/Payoneer/?${tokens}`
+      );
 
-    socket.send(JSON.stringify({ message: inputValue }));
-    setInputValue('');
+      socket.addEventListener("open", () => {
+        console.log("WebSocket connection established.");
+      });
+
+      socket.addEventListener('message', (event) => {
+        const message = JSON.parse(event.data);
+        console.log('Received message:', message);
+        setMessages((prevMessages) => [...prevMessages, message]); // Change this line to include the entire message object
+      });
+
+      socket.addEventListener("error", (error) => {
+        console.error("WebSocket error:", error);
+      });
+
+      socket.addEventListener("close", () => {
+        console.log("WebSocket connection closed.");
+      });
+
+      setSocket(socket);
+    } catch (error) {
+      console.error("Error creating WebSocket:", error);
+    }
+  };
+
+  // const sendMessage = (e) => {
+  //   e.preventDefault();
+  //   if (!socket) return;
+
+  //   socket.send(JSON.stringify({ message: inputValue }));
+  //   setInputValue("");
+  // };
+
+  const sendMessage = (e) => {
+    e.preventDefault();
+    if (socket && socket.readyState === WebSocket.OPEN) {
+      // Check if the socket exists and is open before sending the message
+      socket.send(JSON.stringify({ message: inputValue }));
+      setInputValue("");
+    } else {
+      console.error("WebSocket is not open or not initialized.");
+    }
   };
 
   return (
     <div>
-      <BasicNavbar/>
+      <BasicNavbar />
       <h1>My WebSocket Client</h1>
       <div id="messages">
-        {messages.map((message, index) => (
-          <p key={index}>{message}</p>
-        ))}
+        {Array.isArray(messages) &&
+          messages.map((message, index) => (
+            <p key={index}>{message.message}</p>
+          ))}
       </div>
 
-      <form onSubmit={(e) => { e.preventDefault(); sendMessage(); }}>
+      <form
+        onSubmit={(e) => {
+          sendMessage(e);
+        }}
+      >
         <input
           type="text"
           value={inputValue}
@@ -65,6 +119,3 @@ function WebSocketClient() {
 }
 
 export default WebSocketClient;
-
-
-

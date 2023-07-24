@@ -8,75 +8,94 @@ import { BsFillSendFill } from "react-icons/bs";
 import styles from "./chat.module.css";
 const serverUrl = process.env.NEXT_PUBLIC_SERVER_URL;
 const Chatbody = () => {
-  const {authTokens,user} = useContext(AuthContext)
+  const {user, tokens} = useContext(AuthContext)
+  const [socket, setSocket] = useState(null);
   const [messages, setMessages] = useState([]);
-  console.log(messages)
-  const [messageInputValue, setMessageInputValue] = useState("");
-  const socketRef = useRef(null);
-  const ref = useRef();
-  console.log(authTokens)
-  console.log(user?.name)
+  const [inputValue, setInputValue] = useState("");
+  // Create a ref for the messages container to scroll to
+  const messagesContainerRef = useRef();
+
   
-    useEffect(()=>{
-      if (ref.current) {
-        ref.current.scrollIntoView({ behavior: "instant", block: "end", inline: "nearest" });
-      }
-      if (user && authTokens) {
-        fetch(`https://${serverUrl}/api/user/messages/${user?.name}_Payoneer/?Accept=application/json&access_token=${authTokens?.token.access}`)
-          .then((response) => response.json())
-          .then((data) => setMessages(data))
-          .catch((error) => console.error("Error fetching messages:", error));
-      }
-    },[user])  
 
+    if (messagesContainerRef.current) {
+      messagesContainerRef.current.scrollIntoView({
+        behavior: "instant",
+        block: "end",
+        inline: "nearest",
+      });}
+   
+
+  
   useEffect(() => {
-    
-    
-    if (authTokens && user) {
-      const socketUrl = `wss://${serverUrl}/ws/chat/${user?.name}_Payoneer/?${authTokens?.token.access}`;
-      const socket  = new WebSocket(socketUrl);
+    if (user && tokens) {
+      const fetchMessages = async () => {
+        try {
+          const response = await fetch(
+            `https://p2p-server-l9qu.onrender.com/api/user/messages/${user?.name}_Payoneer/?Accept=application/json&access_token=${tokens}`
+          );
+          if (!response.ok) {
+            throw new Error("Failed to fetch messages");
+          }
+          const data = await response.json();
+          setMessages(data);
 
-      socket.onopen = () => {
-        console.log("WebSocket connection established.");
-        socketRef.current = socket; // Save the socket reference to the ref
-      };
-      socket.onmessage = (event) => {
-        const messageJson = event.data;
-        const message = JSON.parse(messageJson);
-        console.log(message);
-        setMessages((prevMessages) => [...prevMessages, message]);
-      };
-
-      socket.onclose = () => {
-        console.log("WebSocket connection closed.");
+          // Now that you have the data, you can proceed with the WebSocket connection
+          establishWebSocketConnection();
+        } catch (error) {
+          console.error("Error fetching messages:", error);
+        }
       };
 
-    
-      socket.onerror = (error) => {
-        console.error("WebSocket error:", error);
-      };
+      fetchMessages();
     }
-
-    // Clean up the WebSocket connection on component unmount
     return () => {
-      if (socketRef.current) {
-        socketRef.current?.close();
+      if (socket && socket.readyState === WebSocket.OPEN) {
+        socket.close();
       }
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [messages,user,authTokens]);
+  }, [tokens, user]);
 
-  function handleInputChange(event) {
-    setMessageInputValue(event.target.value);
-  }
+  const establishWebSocketConnection = () => {
+    try {
+      const socket = new WebSocket(
+        `wss://p2p-server-l9qu.onrender.com/ws/chat/${user.name}/Payoneer/?${tokens}`
+      );
 
-  function sendMessage(event) {
-    event.preventDefault();
-    if (socketRef.current && socketRef.current.readyState === WebSocket.OPEN) {
-      socketRef.current.send(JSON.stringify({ message: messageInputValue }));
-      setMessageInputValue("");
+      socket.addEventListener("open", () => {
+        console.log("WebSocket connection established.");
+      });
+
+      socket.addEventListener('message', (event) => {
+        const message = JSON.parse(event.data);
+        console.log('Received message:', message);
+        setMessages((prevMessages) => [...prevMessages, message]); // Change this line to include the entire message object
+    
+      });
+
+      socket.addEventListener("error", (error) => {
+        console.error("WebSocket error:", error);
+      });
+
+      socket.addEventListener("close", () => {
+        console.log("WebSocket connection closed.");
+      });
+
+      setSocket(socket);
+    } catch (error) {
+      console.error("Error creating WebSocket:", error);
     }
-  }
+  };
+
+  const sendMessage = (e) => {
+    e.preventDefault();
+    if (socket && socket.readyState === WebSocket.OPEN) {
+      // Check if the socket exists and is open before sending the message
+      socket.send(JSON.stringify({ message: inputValue }));
+      setInputValue("");
+    } else {
+      console.error("WebSocket is not open or not initialized.");
+    }
+  };
 
   return (
         <div className="d-flex flex-column align-items-between">
@@ -97,7 +116,7 @@ const Chatbody = () => {
             </Container>
           </Navbar>
           <div className={styles.chatBody}>
-            <ul id={styles.chat}>
+            <ul id={styles.chat} ref={messagesContainerRef}>
               {Array.isArray(messages) &&messages?.map((message, index) => (
                 <li
                   key={index}
@@ -106,7 +125,7 @@ const Chatbody = () => {
                       ? `${styles.me}`
                       : `${styles.you}`
                   }
-                  ref={ref}
+                  
                 >
                   <div className={styles.entete}>
                     <h2 className="mx-1">
@@ -134,17 +153,20 @@ const Chatbody = () => {
             </ul>
           </div>
           <div className={styles.inputSection}>
-        <form className="w-100" onSubmit={sendMessage}>
-          <input
-            type="text"
-            value={messageInputValue}
-            placeholder="Send message...."
-            onChange={handleInputChange}
-          />
-          <button type="submit">
-            <BsFillSendFill size={24} color="blue" />
-          </button>
-        </form>
+        
+        <form className="w-100"
+        onSubmit={(e) => {
+          sendMessage(e);
+        }}
+      >
+        <input
+          type="text"
+          value={inputValue}
+          onChange={(e) => setInputValue(e.target.value)}
+          placeholder="Type a message..."
+        />
+        <button type="submit"><BsFillSendFill size={24} color="blue" /></button>
+      </form>
       </div>
         </div>
       );
