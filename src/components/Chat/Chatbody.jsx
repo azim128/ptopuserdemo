@@ -53,38 +53,44 @@ const Chatbody = () => {
         socket.close();
       }
     };
-  }, [tokens, user]);
+  }, [tokens]);
 
-  const establishWebSocketConnection = () => {
+  const establishWebSocketConnection = async () => {
     try {
+      // URL encode the tokens
+      const encodedTokens = encodeURIComponent(tokens);
+  
       const socket = new WebSocket(
-        `wss://p2p-server-l9qu.onrender.com/ws/chat/${user.name}/Payoneer/?${tokens}`
+        `wss://p2p-server-l9qu.onrender.com/ws/chat/${user.name}/Payoneer/?${encodedTokens}`
       );
-
-      socket.addEventListener("open", () => {
-        console.log("WebSocket connection established.");
+  
+      // Create a promise that resolves when the WebSocket connection is open
+      const socketOpenPromise = new Promise((resolve, reject) => {
+        socket.addEventListener("open", () => {
+          console.log("WebSocket connection established.");
+          resolve(socket);
+        });
+  
+        socket.addEventListener("error", (error) => {
+          console.error("WebSocket error:", error);
+          reject(error);
+        });
+  
+        socket.addEventListener("close", () => {
+          console.log("WebSocket connection closed.");
+        });
       });
-
-      socket.addEventListener('message', (event) => {
-        const message = JSON.parse(event.data);
-        console.log('Received message:', message);
-        setMessages((prevMessages) => [...prevMessages, message]); // Change this line to include the entire message object
-    
-      });
-
-      socket.addEventListener("error", (error) => {
-        console.error("WebSocket error:", error);
-      });
-
-      socket.addEventListener("close", () => {
-        console.log("WebSocket connection closed.");
-      });
-
-      setSocket(socket);
+  
+      // Wait for the WebSocket connection to be established
+      const resolvedSocket = await socketOpenPromise;
+  
+      // Set the socket state once the connection is established
+      setSocket(resolvedSocket);
     } catch (error) {
       console.error("Error creating WebSocket:", error);
     }
   };
+  
 
   const sendMessage = (e) => {
     e.preventDefault();

@@ -10,7 +10,7 @@ const Page = async() => {
 
     const handelsubmit=async()=>{
         try {
-            const response = await fetch(`http://${serverUrl}${pathname}/`, {
+            const response = await fetch(`https://${serverUrl}${pathname}/`, {
               method: 'POST',
             });
       

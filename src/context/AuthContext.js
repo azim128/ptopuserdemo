@@ -31,59 +31,28 @@ export const AuthProvider = ({ children }) => {
     }
   }, []);
 
-  const validateEmail = (email) => {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailRegex.test(email);
-  };
+  
 
-  const isStrongPassword = (password) => {
-    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
-    return passwordRegex.test(password);
-  };
-
-  const handleSignup = async (name, email, password, confirmPassword) => {
-    // Validation checks
-    if (name.split(" ").length !== 1) {
-      toast.error("Name should be a single word");
-      return;
-    }
-
-    if (password !== confirmPassword) {
-      toast.error("Passwords do not match");
-      return;
-    }
-
-    if (!isStrongPassword(password)) {
-      toast.error(
-        "Password must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, one digit, and one special character"
-      );
-      return;
-    }
-
-    if (!validateEmail(email)) {
-      toast.error("Invalid email address");
-      return;
-    }
-
-    // Continue with signup logic
+  let handleSignup = async (e) => {
+    e.preventDefault();
     try {
-      const response = await fetch(`https://${serverUrl}/api/user/register/`, {
+      let response = await fetch(`https://${serverUrl}/api/user/register/`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          email,
-          name,
+          email: e.target.email.value,
+          name: e.target.name.value.trim(),
           tc: "True",
-          password,
-          password2: confirmPassword,
+          password: e.target.password.value,
+          password2: e.target.password2.value,
         }),
       });
       const data = await response.json();
       if (response.status === 201) {
-        toast.success("Account created successfully!Check Your Mail");
-        router.push("/");
+        router.push("/profile?page=signin");
+        toast.success("Profile Create successful! Cheack Your mail");
       } else {
         if (data && data.errors) {
           // Extract the first error message from the 'errors' object
@@ -95,8 +64,8 @@ export const AuthProvider = ({ children }) => {
         }
       }
     }  catch (error) {
-      console.log(error);
-      toast.error("Something went wrong");
+      alert("Error creating user: " + error.message);
+      toast.error("Somethig went Worng in creating Profile")
     }
   };
 

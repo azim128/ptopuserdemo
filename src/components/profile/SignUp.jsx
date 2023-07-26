@@ -1,7 +1,6 @@
 'use client'
 // Signup.jsx
 import { IoMdEye, IoMdEyeOff, IoIosPerson, IoIosMail } from "react-icons/io";
-import { Container, Form, Button } from "@/components/ReactBootstrap";
 import styles from "./form.module.css";
 import Link from "next/link";
 
@@ -10,10 +9,6 @@ import AuthContext from "@/context/AuthContext";
 
 const SignUp = () => {
   const {handleSignup}=useContext(AuthContext)
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
@@ -25,21 +20,15 @@ const SignUp = () => {
     setShowConfirmPassword(!showConfirmPassword);
   };
 
-  const handleSignupform = (e) => {
-    e.preventDefault();
-
-    handleSignup(name, email, password, confirmPassword);
-  };
-
   
 
   return (
-    <Container  style={{ minHeight: "75vh" }}>
+    <div>
       <main className={styles.wrapper}>
-      <form onSubmit={handleSignupform }>
-      <h1 className="my-4">Create Your Account</h1>
+        <form onSubmit={handleSignup}>
+          <h1 className="my-4">Create Your Account</h1>
 
-      <div className={styles.IconDiv}>
+          <div className={styles.IconDiv}>
             <input
               type="name"
               name="name"
@@ -90,16 +79,13 @@ const SignUp = () => {
             </button>
           </div>
 
-      <button type="submit" className={styles.submitbtn}>Sign up</button>
-
-      <p className="my-3">
-        If you have an account,
-        <Link href="profile?page=signin">Sign In</Link>
-      </p>
-    </form>
+          <button className={styles.submitbtn} type="submit">
+            Sign up
+          </button>
+          <p className={`${styles.fromtext}  my-3`}>If you have an account <Link href='/signin' className={styles.linktext}>Sign In</Link></p>
+        </form>
       </main>
-      
-    </Container>
+    </div>
   );
 };
 
