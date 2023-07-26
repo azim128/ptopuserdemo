@@ -10,7 +10,7 @@ import { useSearchParams } from "next/navigation";
 const page = () => {
   const searchParams = useSearchParams();
   const search = searchParams.get("page");
-  console.log(search);
+  // console.log(search);
   return <>
    <header>
         <BasicNavbar />

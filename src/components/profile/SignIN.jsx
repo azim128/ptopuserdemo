@@ -2,12 +2,17 @@
 import Link from "next/link";
 import { Container, Form, Button } from "@/components/ReactBootstrap";
 import styles from "./form.module.css";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import AuthContext from "@/context/AuthContext";
 import { toast } from "react-toastify";
-
+import { IoMdEye, IoMdEyeOff, IoIosMail } from "react-icons/io";
 const SignIn = () => {
   const { loginUser } = useContext(AuthContext);
+  const [showPassword, setShowPassword] = useState(false);
+
+  const handlePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -25,18 +30,32 @@ const SignIn = () => {
         <Form onSubmit={handleLogin}>
           <h1 className="my-4">Login to Your Account</h1>
 
-          <Form.Group controlId="formEmail">
-            <Form.Control
+          <div className={styles.IconDiv}>
+            <input
               type="email"
               name="email"
-              placeholder="Enter Your Email Address.."
-              autoFocus
+              id="floatingInput"
+              placeholder="Enter Your Email Address"
             />
-          </Form.Group>
+             <IoIosMail className={styles.inputIcon} />
+          </div>
+          <div className={styles.passwordDiv}>
+            <input
+              type={showPassword ? "text" : "password"}
+              name="password"
+              id="floatingPassword"
+              placeholder="Password"
+            />
+            {/* Add the show/hide password toggle button */}
+            <button
+              type="button"
+              onClick={handlePasswordVisibility}
+              className={styles.passwordToggle}
+            >
+              {showPassword ? <IoMdEyeOff /> : <IoMdEye />}
+            </button>
+          </div>
 
-          <Form.Group controlId="formPassword">
-            <input type="password" name="password" placeholder="Password" autoComplete="password"/>
-          </Form.Group>
 
           <Button className={styles.submitbtn} type="submit">
             Sign in
