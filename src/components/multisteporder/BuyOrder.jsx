@@ -36,7 +36,6 @@ const OrderForm = () => {
           order_email: orderData.order_email,
           Amount: orderData.Amount,
           purpose: orderData.purpose,
-          Customer: user?.id,
           coin: '1',
           method: 'buy',
         }
