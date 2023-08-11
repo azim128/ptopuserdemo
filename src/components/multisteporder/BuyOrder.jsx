@@ -6,7 +6,7 @@ import AuthContext from '@/context/AuthContext';
 import styles from './multiform.module.css'
 const serverUrl = process.env.NEXT_PUBLIC_SERVER_URL;
 const OrderForm = () => {
-  const { user } = useContext(AuthContext);
+  const { user,tokens } = useContext(AuthContext);
   const [orderData, setOrderData] = useState({
     order_email: '',
     Amount: '',
@@ -31,7 +31,7 @@ const OrderForm = () => {
       }
 
       const response = await axios.post(
-        `https://${serverUrl}/api/order/create-order/buy/`,
+        `https://${serverUrl}/api/order/create-order/buy//?Accept=application/json&access_token=${tokens}`,
         {
           order_email: orderData.order_email,
           Amount: orderData.Amount,
