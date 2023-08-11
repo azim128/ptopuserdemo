@@ -22,7 +22,7 @@ export default function RootLayout({ children }) {
       <body className={poppins.className}>
 
         {children}
-        <ToastContainer/>
+        <ToastContainer autoClose='1000'/>
         
       </body>
       </ChatProvider>

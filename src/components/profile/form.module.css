@@ -3,7 +3,7 @@
     width: 400px;
     padding: 2rem 0;
     margin: 30px auto;
-    background: #fff;
+    background: #0d151e;
     border-radius: 10px;
     text-align: center;
     box-shadow: 0 20px 35px rgba(0, 0, 0, 0.1);
@@ -11,14 +11,14 @@
 
   @media only screen and (max-width: 450px) {
     .wrapper {
-        width: 300px;
+        width: 320px;
         
       }
   }
   .wrapper h1 {
     font-size: 1.6rem;
     font-weight: 700 !important;
-    color: #07001f;
+    color: #fff;
     width: 85%;
     margin-left: auto;
     margin-right: auto;
@@ -27,7 +27,8 @@
     width: 85%;
     outline: none;
     border: none;
-    background: #dfe9f5;
+    background: #000;
+    color: #fff;
     padding: 12px 14px;
     margin-bottom: 10px;
     margin-left: auto;
@@ -38,18 +39,41 @@
     font-size: 1.1rem;
     margin-top: 1rem;
     padding: 8px 0;
-    border-radius: 5px;
     outline: none;
-    border: none;
     width: 85%;
     margin-left: auto;
     margin-right: auto;
-    background: #6200ff;
-    color: #fff;
+    background: #FFBD00;
+    color: #090909;
+    border-radius: 5px;
+    border: 1px solid #FFBD00;
+    position: relative;
+    z-index: 1;
     cursor: pointer;
   }
   .wrapper button:hover {
-    background: rgba(98, 0, 255, 0.767);
+    color: #fff;
+  }
+  .wrapper button::before{
+    position: absolute;
+      content: "";
+      z-index: -1;
+      right: 0;
+      bottom: 0;
+      left: inherit;
+      top: inherit;
+      width: 26px;
+      height: 22px;
+      background: #FFD761;
+      border-radius: 25px 0 0 0;
+      transition: .5s;
+  
+  }
+  
+  .wrapper button:hover:before {
+    width: 100%;
+    height: 100%;
+    border-radius: 5px;
   }
   .fromtext {
     font-size: 0.8rem;
@@ -128,6 +152,8 @@
     width: 100%;
     margin: 2px;
     border: none;
+    background: #000;
+    color: #fff;
     outline: none;
     padding: 8px;
     border-radius: 5px;
@@ -179,11 +205,11 @@
 
 .passwordToggle svg {
   font-size: 2.25rem;
-  color: #555;
+  color: #e1ba14;
 }
 svg.inputIcon {
   font-size: 2.25rem;
-  color: #555;
+  color: #e1ba14;
 }
 
 /* Styling the icon when password is visible */

@@ -46,7 +46,7 @@ const SellPage = ({data}) => {
               width={216}
               height={172}
             />
-            <h1 className="display-5 fw-bold heading text-body-emphasis">
+            <h1 className="display-5 fw-bold heading text-light text-body-emphasis">
       
               Exchange Rate : {exchangeRate}
             </h1>

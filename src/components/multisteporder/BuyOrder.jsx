@@ -1,128 +1,96 @@
-'use client'
-import { useContext, useRef, useState } from "react";
-import { Button } from "@/components/ReactBootstrap";
-import { useRouter } from 'next/navigation';
-import styles from "./multiform.module.css";
-import AuthContext from "@/context/AuthContext";
-import Purchase from "./Purchase";
-import AccountDetailes from "./AccountDetailes";
-import Final from "./Final";
-import PrivateRoute from "@/helper/PrivateRoute";
-const serverUrl = process.env.NEXT_PUBLIC_SERVER_URL;
+import React, { useContext, useState } from 'react';
+import axios from 'axios';
 import { toast } from 'react-toastify';
-
-
-const BuyOrder = () => {
-  const { user, authTokens } = useContext(AuthContext);
- 
-  const [page, setPage] = useState(0);
- 
-  console.log(user);
-  const router = useRouter();
-
-  
-  const [formData, setFormData] = useState({
-    customer: `${user?.name}`,
-    account_details:'any',
-    coin:'1',
-    amount: "",
-    order_email: "",
-    method: "buy",
-    state: "Processing",
+import { Container } from "@/components/ReactBootstrap";
+import AuthContext from '@/context/AuthContext';
+import styles from './multiform.module.css'
+const serverUrl = process.env.NEXT_PUBLIC_SERVER_URL;
+const OrderForm = () => {
+  const { user } = useContext(AuthContext);
+  const [orderData, setOrderData] = useState({
+    order_email: '',
+    Amount: '',
+    purpose: 'pay',
   });
 
-  const FormTitles = ["I want to Buy", "Account Info", "Order"];
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setOrderData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
 
-  const PageDisplay = () => {
-    if (page === 0) {
-      return <Purchase formData={formData} setFormData={setFormData} />;
-    } else if (page === 1) {
-      return <AccountDetailes formData={formData} setFormData={setFormData} />;
-    } else {
-      return <Final/>
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      if (!orderData.order_email || !orderData.Amount || !orderData.purpose) {
+        toast.error('Please fill in all required fields');
+        return;
+      }
+
+      const response = await axios.post(
+        `https://${serverUrl}/api/order/create-order/buy/`,
+        {
+          order_email: orderData.order_email,
+          Amount: orderData.Amount,
+          purpose: orderData.purpose,
+          Customer: user?.id,
+          coin: '1',
+          method: 'buy',
+        }
+      );
+
+      toast.success('Order created successfully');
+      // You can also reset the form here if needed
+    } catch (error) {
+      if (error.response && error.response.data && error.response.data.errors) {
+        const errorKeys = Object.keys(error.response.data.errors);
+        const errorMessage = error.response.data.errors[errorKeys[0]][0];
+        toast.error(errorMessage);
+      } else {
+        toast.error('An error occurred while creating the order');
+      }
     }
   };
-  
 
-  const handleSubmit = async() => {
-    if (page === FormTitles.length - 1) {
-      const formDataString = Object.keys(formData)
-      .map(key => `${key}: ${formData[key]}`)
-      .join(' , ');
-    
-      // try {
-      //   const response = await fetch(`https://${serverUrl}/api/order/create-order/?Accept=application/json&access_token=${authTokens?.token.access}`, {
-      //     method: 'POST',
-      //     body: JSON.stringify(formData),
-      //   });
-  
-      //   if (response.ok) {
-      //     toast.success('Order created successfully');
-      //   } else {
-      //     const errorData = await response.json();
-      //     toast.error(`Failed to create order: ${errorData.message}`);
-      //   }
-      // } catch (error) {
-      //   toast.error('An error occurred while creating the order');
-      // }
-     
-      router.push('/chat')
-    } else {
-      setPage((currPage) => currPage + 1);
-    }
-  };
-  
-  const closeChat=()=>{
-    router.push('/');
-  }
   return (
-    <PrivateRoute>
-    <div
-      className="d-flex justify-content-center align-items-center"
-      style={{ minHeight: "80vh" }}
-    >
-      <div className={styles.form}>
-        <div className={styles.progressbar}>
-          <div
-            style={{
-              width: page === 0 ? "33.3%" : page === 1 ? "66.6%" : "100%", borderRadius:'5px'
-            }}
-          ></div>
-        </div>
-        <div className={styles.formContainer}>
-          <div className={`${styles.header} position-relative`}>
-            <h1>{FormTitles[page]}</h1>
-            <button
-              type="button"
-              className="btn-close position-absolute end-0 me-3"
-              data-bs-dismiss="modal"
-              aria-label="Close"
-              onClick={closeChat}
-            ></button>
-          </div>
-          <div className={styles.body}>{PageDisplay()}</div>
-          <div className={styles.footer}>
-            <Button
-              disabled={page === 0}
-              onClick={() => {
-                setPage((currPage) => currPage - 1);
-              }}
-            >
-              Prev
-            </Button>
-            <Button onClick={handleSubmit}>
-              {page === FormTitles.length - 1 ? "Submit" : "Next"}
-            </Button>
-          </div>
-        </div>
-      </div>
+    <Container style={{ minHeight: "75vh" }}>
+    <div className={styles.wrapper}>
+      <form onSubmit={handleSubmit}>
+      <label htmlFor="order_email">Order Email:</label>
+        <input
+          type="email"
+          name="order_email"
+          value={orderData.order_email}
+          onChange={handleChange}
+          placeholder="Email"
+        />
+        <label htmlFor="Amount">Amount:</label>
+        <input
+          type="number"
+          name="Amount"
+          min={20}
+          value={orderData.Amount}
+          onChange={handleChange}
+          placeholder="Buy Amount"
+        />
+        <label htmlFor="purpose">Purpose:</label>
+        <input
+          type="text"
+          name="purpose"
+          value={orderData.purpose}
+          onChange={handleChange}
+          placeholder="Purpose"
+        />
+        <button type="submit" className={styles.submitbtn } disabled={!user}>
+          Create Order
+        </button>
+      </form>
     </div>
-    </PrivateRoute>
+    </Container>
   );
 };
 
-
-
-
-export default BuyOrder
-
+export default OrderForm;

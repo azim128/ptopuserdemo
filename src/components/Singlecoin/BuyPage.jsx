@@ -46,19 +46,19 @@ const BuyPage = ({data}) => {
               width={216}
               height={172}
             />
-            <h1 className="display-5 fw-bold heading text-body-emphasis">
+            <h1 className="display-5 fw-bold heading text-light ">
       
               Exchange Rate : {exchangeRate}
             </h1>
   
-            <p className="heading4 my-3">{data?.name}</p>
+            <p className="heading4 my-3 text-light">{data?.name}</p>
             <div className="col-md-10 mx-auto">
-              <p className="lead mb-4">
+              <p className="lead mb-4 text-light">
                 {data?.description}
               </p>
               <div className={`${styles.wrapper} row`}>
                 <div className="col-6">
-                  <label className="text-left mb-1">I will pay USD</label>
+                  <label className="text-left mb-1 text-light">I will pay USD</label>
                   <input
                     type="text"
                     value={currencyA}
@@ -66,7 +66,7 @@ const BuyPage = ({data}) => {
                   />
                 </div>
                 <div className="col-6">
-                  <label className="text-left mb-1">and receive USDT</label>
+                  <label className="text-left mb-1 text-light">and receive USDT</label>
                   <input
                     type="text"
                     value={currencyB}

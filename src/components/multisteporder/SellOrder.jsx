@@ -1,136 +1,142 @@
-'use client'
-import { useContext, useState } from "react";
-import { Button } from "@/components/ReactBootstrap";
-import {toast} from 'react-toastify'
-import { useRouter } from 'next/navigation';
-
-
-import styles from "./multiform.module.css";
-import AuthContext from "@/context/AuthContext";
-import Purchase from "./Purchase";
-import AccountDetailes from "./AccountDetailes";
-import Final from "./Final";
-import PrivateRoute from "@/helper/PrivateRoute";
-const serverUrl = process.env.NEXT_PUBLIC_SERVER_URL;
-
-
-const SellOrder = () => {
-  const { user, authTokens,setOrderMessage } = useContext(AuthContext);
- 
-  const [page, setPage] = useState(0);
- 
-  console.log(user);
-  const router = useRouter();
-
-  
-  const [formData, setFormData] = useState({
-    customer: `${user?.name}`,
-    account_details:'any',
-    coin:'1',
-    amount: "0",
-    order_email: "",
-    method: "sell",
-    state: "Processing",
+import React, { useContext, useState } from 'react';
+import axios from 'axios';
+import { toast } from 'react-toastify';
+import { Container } from 'react-bootstrap';
+import styles from './multiform.module.css'
+import AuthContext from '@/context/AuthContext';
+const OrderForm = () => {
+  const { user } = useContext(AuthContext);
+  const [orderData, setOrderData] = useState({
+    Amount: 20,
+    walletType: '',
+    trc20Address: '',
+    trc20FeeOption: 'binance',
+    bep20Address: '',
+    bep20FeeOption: 'binance',
   });
 
-  const FormTitles = ["I want to Sell", "Account Info", "Order"];
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setOrderData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
 
-  const PageDisplay = () => {
-    if (page === 0) {
-      return <Purchase formData={formData} setFormData={setFormData} />;
-    } else if (page === 1) {
-      return <AccountDetailes formData={formData} setFormData={setFormData} />;
-    } else {
-      return <Final/>
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      
+      console.log('Order data:', orderData);
+      // Reset the form after submission
+      setOrderData({
+        Amount: 20,
+        walletType: '',
+        trc20Address: '',
+        trc20FeeOption: 'binance',
+        bep20Address: '',
+        bep20FeeOption: 'binance',
+      });
+
+      // Handle success
+      toast.success('Order created successfully');
+      // You can also reset the form here if needed
+    } catch (error) {
+      // Handle error
+      toast.error('An error occurred while creating the order');
     }
   };
-  
-  const handleSubmit = async() => {
-    if (page === FormTitles.length - 1) {
-      const formDataString = Object.keys(formData)
-      .map(key => `${key}: ${formData[key]}`)
-      .join(' , ');
-
-      // try {
-      //   const response = await fetch(`https://${serverUrl}/api/order/create-order/?Accept=application/json&access_token=${authTokens?.token.access}`, {
-      //     method: 'POST',
-      //     headers: {
-      //       "Content-Type": "application/json",
-      //     },
-      //     body: JSON.stringify(formData),
-      //   });
-  
-      //   if (response.ok) {
-      //     toast.success('Order created successfully');
-      //     setOrderMessage(formDataString)
-      //   } else {
-      //     const errorData = await response.json();
-      //     toast.error(`Failed to create order: ${errorData.message}`);
-      //   }
-      // } catch (error) {
-      //   toast.error('An error occurred while creating the order');
-      // }
-
-      router.push('/chat')
-    } else {
-      setPage((currPage) => currPage + 1);
-    }
-  };
-  
-  const closeChat=()=>{
-    router.push('/');
-  }
-  //Chat 
-  
-
 
   return (
-    <PrivateRoute>
-    <div
-      className="d-flex justify-content-center align-items-center"
-      style={{ minHeight: "80vh" }}
-    >
-      <div className={styles.form}>
-        <div className={styles.progressbar}>
-          <div
-            style={{
-              width: page === 0 ? "33.3%" : page === 1 ? "66.6%" : "100%", borderRadius:'5px'
-            }}
-          ></div>
+    <Container style={{ minHeight: "75vh" }}>
+  <div className={styles.wrapper}>
+    <form onSubmit={handleSubmit}>
+    <label htmlFor="Amount">Amount:</label>
+        <input
+          type="number"
+          name="Amount"
+          min={20}
+          value={orderData.Amount}
+          onChange={handleChange}
+          placeholder="Buy Amount"
+        />
+      {/* Wallet Type Selection */}
+
+      <label htmlFor="walletType">Wallet Type:</label>
+      <select
+        name="walletType"
+        value={orderData.walletType}
+        onChange={handleChange}
+        required
+      >
+        <option value="">Select Wallet Type</option>
+        <option value="trc20">Trc20</option>
+        <option value="bep20">Bep20</option>
+      </select>
+
+      {orderData.walletType === "trc20" && (
+        <div>
+          <label htmlFor="trc20Address">Trc20 Address:</label>
+          <input
+            type="text"
+            name="trc20Address"
+            value={orderData.trc20Address}
+            onChange={handleChange}
+            placeholder="Trc20 Address"
+            required
+          />
+
+          {/* Fee Selection for Trc20 */}
+          <label htmlFor="trc20FeeOption">Fee Option:</label>
+          <select
+            name="trc20FeeOption"
+            value={orderData.trc20FeeOption}
+            onChange={handleChange}
+            required
+          >
+            <option value="binance">Binance (No Fee)</option>
+            <option value="other">Other Wallet (1 USDT Fee)</option>
+          </select>
         </div>
-        <div className={styles.formContainer}>
-          <div className={`${styles.header} position-relative`}>
-            <h1>{FormTitles[page]}</h1>
-            <button
-              type="button"
-              className="btn-close position-absolute end-0 me-3"
-              data-bs-dismiss="modal"
-              aria-label="Close"
-              onClick={closeChat}
-            ></button>
-          </div>
-          <div className={styles.body}>{PageDisplay()}</div>
-          <div className={styles.footer}>
-            <Button
-              disabled={page === 0}
-              onClick={() => {
-                setPage((currPage) => currPage - 1);
-              }}
-            >
-              Prev
-            </Button>
-            <Button onClick={handleSubmit}>
-              {page === FormTitles.length - 1 ? "Submit" : "Next"}
-            </Button>
-          </div>
+      )}
+
+      {orderData.walletType === "bep20" && (
+        <div>
+          <label htmlFor="bep20Address">Bep20 Address:</label>
+          <input
+            type="text"
+            name="bep20Address"
+            value={orderData.bep20Address}
+            onChange={handleChange}
+            placeholder="Bep20 Address"
+            required
+          />
+
+          {/* Fee Selection for Bep20 */}
+          <label htmlFor="bep20FeeOption">Fee Option:</label>
+          <select
+            name="bep20FeeOption"
+            value={orderData.bep20FeeOption}
+            onChange={handleChange}
+            required
+          >
+            <option value="binance">Binance (No Fee)</option>
+            <option value="other">Other Wallet (0.29 Fee)</option>
+          </select>
         </div>
-      </div>
-    </div>
-    </PrivateRoute>
+      )}
+
+      <button type="submit" className={styles.submitbtn} disabled={!user}>
+        Create Order
+      </button>
+    </form>
+  </div>
+</Container>
+
+  
+  
   );
 };
 
-
-
-
-export default SellOrder
+export default OrderForm;

@@ -24,12 +24,12 @@ const page = async({ params: { id },searchParams }) => {
    
     const {page}=searchParams
   
-  return <>
+  return <main className="hero-section" style={{minHeight:'100vh'}}>
      
 
         {page==='sell'&&<SellPage data={singleCoin}/>}
         {page==='buy'&&<BuyPage data={singleCoin}/>}
-  </>;
+  </main>;
 };
 
 export default page;

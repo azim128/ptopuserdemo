@@ -1,5 +1,6 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 "use client";
+import Footer from "@/components/Footer";
 import BasicNavbar from "@/components/Navbar";
 import Profile from "@/components/profile/Profile";
 import SignIN from "@/components/profile/SignIN";
@@ -11,7 +12,7 @@ const page = () => {
   const searchParams = useSearchParams();
   const search = searchParams.get("page");
   // console.log(search);
-  return <>
+  return <main className="hero-section" style={{minHeight:'100vh'}}>
    <header>
         <BasicNavbar />
       </header>
@@ -19,8 +20,10 @@ const page = () => {
     {search==='signin'&&<SignIN/>}
         {search==='signup'&&<SignUp/>}
         {search===null && <Profile/>}
+
         
-  </>;
+        
+  </main>;
 };
 
 export default page;

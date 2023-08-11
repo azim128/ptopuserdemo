@@ -1,11 +1,13 @@
 'use client'
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { Modal, Button } from '@/components/ReactBootstrap';
 import { BsTelegram, BsWhatsapp } from 'react-icons/bs';
 import Link from 'next/link';
+import AuthContext from '@/context/AuthContext';
 
 function ModalBox({title}) {
   const [show, setShow] = useState(false);
+  const { user } = useContext(AuthContext);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -16,12 +18,18 @@ function ModalBox({title}) {
     <>
       <Modal.Header >
         <Modal.Title className='d-flex flex-column justify-content-center mx-auto'>
-          <h3  className='me-2 my-4'>
+          {user?<>
+          
+            <h3  className='me-2 my-4'>
             Buy via Web
           </h3>
+          
           <Link href="/exchanges?page=buy"  className='btn btn-outline-success'>
             Order Now
           </Link>
+          </>:<>
+          
+          </>}
         </Modal.Title>
         
       </Modal.Header>
