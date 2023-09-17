@@ -38,20 +38,22 @@ const OrderForm = () => {
         toast.error('Amount must be at least 20');
         return;
       }
-
-      await axios.post(
-        `https://${serverUrl}/api/order/create-order/buy/?Accept=application/json&access_token=${tokens}`,
-        {
-          order_email: orderData.order_email,
-          amount: orderData.amount,
-          purpose: orderData.purpose,
-          coin: 1, // Make sure to use the correct data type here
-          method: 'buy',
-        }
-      );
-
-      toast.success('Order created successfully');
-      router.push('/chat')
+      if(tokens){
+        await axios.post(
+          `https://${serverUrl}/api/order/create-order/buy/?Accept=application/json&access_token=${tokens}`,
+          {
+            order_email: orderData.order_email,
+            amount: orderData.amount,
+            purpose: orderData.purpose,
+            coin: 1, // Make sure to use the correct data type here
+            method: 'buy',
+          }
+        );
+  
+        toast.success('Order created successfully');
+        router.push('/chat')
+      }
+      
     } catch (error) {
       if (error.response && error.response.data && error.response.data.errors) {
         const errorKeys = Object.keys(error.response.data.errors);

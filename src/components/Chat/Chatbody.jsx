@@ -89,8 +89,11 @@ const Chatbody = () => {
         console.log("WebSocket connection closed. Reconnecting...");
         setTimeout(() => establishWebSocketConnection(), 1000);
       });
+      newSocket.addEventListener("error", (error) => {
+        console.error("WebSocket error:", error);
+      });
     } catch (error) {
-      console.error("Error creating WebSocket:", error);
+      console.error("WebSocket error:", error);
     }
   };
 

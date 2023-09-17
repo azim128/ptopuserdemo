@@ -43,7 +43,7 @@ const OrderForm = () => {
       //   toast.error('Invalid BEP20 address');
       //   return;
       // }
-
+      if(tokens){
       await axios.post(
         `https://${serverUrl}/api/order/create-order/sell/?Accept=application/json&access_token=${tokens}`,
         {
@@ -59,6 +59,7 @@ const OrderForm = () => {
 
       toast.success('Order created successfully');
       router.push('/chat')
+      }
     } catch (error) {
       if (error.response && error.response.data && error.response.data.errors) {
         const errorKeys = Object.keys(error.response.data.errors);
