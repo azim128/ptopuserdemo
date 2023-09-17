@@ -2,17 +2,18 @@ import React, { useContext, useState } from 'react';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import { Container } from 'react-bootstrap';
-import styles from './multiform.module.css'
+import styles from './multiform.module.css';
 import AuthContext from '@/context/AuthContext';
+
+const serverUrl = process.env.NEXT_PUBLIC_SERVER_URL;
+
 const OrderForm = () => {
-  const { user } = useContext(AuthContext);
+  const { user, tokens } = useContext(AuthContext);
   const [orderData, setOrderData] = useState({
-    Amount: 20,
+    amount: 20,
     walletType: '',
-    trc20Address: '',
-    trc20FeeOption: 'binance',
-    bep20Address: '',
-    bep20FeeOption: 'binance',
+    address: '',
+    feeOption: 'binance', // Default fee option
   });
 
   const handleChange = (e) => {
@@ -27,115 +28,105 @@ const OrderForm = () => {
     e.preventDefault();
 
     try {
-      
-      console.log('Order data:', orderData);
-      // Reset the form after submission
-      setOrderData({
-        Amount: 20,
-        walletType: '',
-        trc20Address: '',
-        trc20FeeOption: 'binance',
-        bep20Address: '',
-        bep20FeeOption: 'binance',
-      });
+      if (!orderData.amount || !orderData.walletType || !orderData.address) {
+        toast.error('Please fill in all required fields');
+        return;
+      }
 
-      // Handle success
+      // Client-side validation for TRC20 and BEP20 addresses
+      // if (orderData.walletType === 'trc20' ) {
+      //   toast.error('Invalid TRC20 address');
+      //   return;
+      // }
+
+      // if (orderData.walletType === 'bep20' ) {
+      //   toast.error('Invalid BEP20 address');
+      //   return;
+      // }
+
+      await axios.post(
+        `https://${serverUrl}/api/order/create-order/sell/?Accept=application/json&access_token=${tokens}`,
+        {
+          account_details: orderData.walletType,
+          coin: 1,
+          amount: orderData.amount,
+          purpose: 'pay',
+          trc20_address: orderData.walletType === 'trc20' ? orderData.address : '',
+          bep20_address: orderData.walletType === 'bep20' ? orderData.address : '',
+          method: 'sell',
+        }
+      );
+
       toast.success('Order created successfully');
-      // You can also reset the form here if needed
+      router.push('/chat')
     } catch (error) {
-      // Handle error
-      toast.error('An error occurred while creating the order');
+      if (error.response && error.response.data && error.response.data.errors) {
+        const errorKeys = Object.keys(error.response.data.errors);
+        const errorMessage = error.response.data.errors[errorKeys[0]][0];
+        toast.error(errorMessage);
+      } else {
+        toast.error('An error occurred while creating the order');
+      }
     }
   };
 
+  // You can define your validation functions here for TRC20 and BEP20 addresses
+
   return (
-    <Container style={{ minHeight: "75vh" }}>
-  <div className={styles.wrapper}>
-    <form onSubmit={handleSubmit}>
-    <label htmlFor="Amount">Amount:</label>
-        <input
-          type="number"
-          name="Amount"
-          min={20}
-          value={orderData.Amount}
-          onChange={handleChange}
-          placeholder="Buy Amount"
-        />
-      {/* Wallet Type Selection */}
+    <Container style={{ minHeight: '75vh' }}>
+      <div className={styles.wrapper}>
+        <form onSubmit={handleSubmit}>
+          <label htmlFor="amount">Amount:</label>
+          <input
+            type="number"
+            name="amount"
+            min={20}
+            value={orderData.amount}
+            onChange={handleChange}
+            placeholder="Buy Amount"
+          />
 
-      <label htmlFor="walletType">Wallet Type:</label>
-      <select
-        name="walletType"
-        value={orderData.walletType}
-        onChange={handleChange}
-        required
-      >
-        <option value="">Select Wallet Type</option>
-        <option value="trc20">Trc20</option>
-        <option value="bep20">Bep20</option>
-      </select>
+          {/* Wallet Type Selection */}
+          <label htmlFor="walletType">Wallet Type:</label>
+          <select
+            name="walletType"
+            value={orderData.walletType}
+            onChange={handleChange}
+            required
+          >
+            <option value="">Select Wallet Type</option>
+            <option value="trc20">TRC20</option>
+            <option value="bep20">BEP20</option>
+          </select>
 
-      {orderData.walletType === "trc20" && (
-        <div>
-          <label htmlFor="trc20Address">Trc20 Address:</label>
+          <label htmlFor="address">{orderData.walletType === 'trc20' ? 'TRC20' : 'BEP20'} Address:</label>
           <input
             type="text"
-            name="trc20Address"
-            value={orderData.trc20Address}
+            name="address"
+            value={orderData.address}
             onChange={handleChange}
-            placeholder="Trc20 Address"
+            placeholder={`${orderData.walletType.toUpperCase()} Address`}
             required
           />
 
-          {/* Fee Selection for Trc20 */}
-          <label htmlFor="trc20FeeOption">Fee Option:</label>
+          {/* Fee Selection */}
+          <label htmlFor="feeOption">Fee Option:</label>
           <select
-            name="trc20FeeOption"
-            value={orderData.trc20FeeOption}
+            name="feeOption"
+            value={orderData.feeOption}
             onChange={handleChange}
             required
           >
             <option value="binance">Binance (No Fee)</option>
-            <option value="other">Other Wallet (1 USDT Fee)</option>
+            <option value="other">Other Wallet (1USDT Fee)</option>
           </select>
-        </div>
-      )}
 
-      {orderData.walletType === "bep20" && (
-        <div>
-          <label htmlFor="bep20Address">Bep20 Address:</label>
-          <input
-            type="text"
-            name="bep20Address"
-            value={orderData.bep20Address}
-            onChange={handleChange}
-            placeholder="Bep20 Address"
-            required
-          />
-
-          {/* Fee Selection for Bep20 */}
-          <label htmlFor="bep20FeeOption">Fee Option:</label>
-          <select
-            name="bep20FeeOption"
-            value={orderData.bep20FeeOption}
-            onChange={handleChange}
-            required
-          >
-            <option value="binance">Binance (No Fee)</option>
-            <option value="other">Other Wallet (0.29 Fee)</option>
-          </select>
-        </div>
-      )}
-
-      <button type="submit" className={styles.submitbtn} disabled={!user}>
-        Create Order
-      </button>
-    </form>
-  </div>
-</Container>
-
-  
-  
+          <button type="submit" className={styles.submitbtn} disabled={!user}>
+            Create Order
+          </button>
+        </form>
+      </div>
+    </Container>
   );
 };
 

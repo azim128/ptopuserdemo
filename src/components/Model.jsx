@@ -44,7 +44,7 @@ function ModalBox({title}) {
           <h3  className='me-2 my-4'>
             Sell via Web
           </h3>
-          <Link href="/chat"  className='btn btn-outline-success'>
+          <Link href="/exchanges?page=sell"  className='btn btn-outline-success'>
             Order Now
           </Link>
         </Modal.Title>
@@ -74,7 +74,7 @@ function ModalBox({title}) {
 
   return (
     <>
-      <Button variant="primary" onClick={handleShow}>
+      <Button className='commonButton' onClick={handleShow}>
       {title}
       </Button>
 

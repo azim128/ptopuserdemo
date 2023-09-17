@@ -1,13 +1,14 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'react-toastify/dist/ReactToastify.css';
+import 'react-vertical-timeline-component/style.min.css';
 import './globals.css'
-import { Poppins  } from 'next/font/google'
+import { Roboto  } from 'next/font/google'
 // import { SSRProvider } from '@/components/ReactBootstrap';
 import { ToastContainer } from '@/components/ReactBootstrap';
 import { AuthProvider } from '@/context/AuthContext';
 import { ChatProvider } from '@/context/ChatContext';
 
-const poppins = Poppins ({ weight:['100','200','300','400','500','600','700','800','900'],subsets: ['latin'] })
+const roboto = Roboto ({ weight:['100','300','400','500','700','900'],subsets: ['latin'] })
 
 export const metadata = {
   title: 'PTOP',
@@ -19,7 +20,7 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <AuthProvider>
         <ChatProvider>
-      <body className={poppins.className}>
+      <body className={roboto.className}>
 
         {children}
         <ToastContainer autoClose='1000'/>

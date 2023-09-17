@@ -36,7 +36,10 @@ export default async function Home() {
             ))}
           </Row>
         </Container>
+        
+        <div className="pb-5">
         <TwoCardSection/>
+        </div>
         <Footer />
       </main>
     </div>
@@ -44,7 +47,7 @@ export default async function Home() {
 }
 
 async function getData() {
-  const res = await fetch(`https://${serverUrl}/api/payment/all-method/`, {
+  const res = await fetch(`https://${serverUrl}/api/payment/all-method/`,{ cache: 'no-store' }, {
     next: { revalidate: 10 },
   });
 

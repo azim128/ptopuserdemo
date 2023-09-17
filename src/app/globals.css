@@ -1,6 +1,6 @@
 
 :root{
-  --main-bg:#1a2040;
+  --main-bg:#202123;
 }
 
 * {
@@ -127,7 +127,7 @@ a {
   width: 100%;
   -webkit-box-shadow: 0 2px 5px -2px rgba(0, 0, 0, 0.1);
   box-shadow: 0 2px 5px -2px rgba(0, 0, 0, 0.1);
-  background: #000000 !important;
+  background: #202123 !important;
   transition: .5s;
   z-index: 999;
   border: 0;
@@ -136,7 +136,7 @@ a {
 /* Hero section */
 
 .hero-section{
-  background: #050603;
+  background: #222;
     
 }
 
@@ -221,3 +221,44 @@ a {
 }
 
 /* Add any other custom styles as needed */
+/* commob btn */
+
+.commonButton{
+  padding: 15px 34px;
+  font-weight: 500;
+  font-family: 'Montserrat';
+  background: #FFBD00;
+  color: #fafafa;
+  border-radius: 5px;
+  border: 1px solid #FFBD00;
+  position: relative;
+  
+  z-index: 1;
+}
+.commonButton:hover{
+color: #fff;
+}
+.commonButton::before{
+position: absolute;
+  content: "";
+  z-index: -1;
+  right: 0;
+  bottom: 0;
+  left: inherit;
+  top: inherit;
+  width: 26px;
+  height: 22px;
+  background: #FFD761;
+  border-radius: 25px 0 0 0;
+  transition: .5s;
+
+}
+
+.commonButton:hover:before {
+width: 100%;
+height: 100%;
+border-radius: 5px;
+}
+
+
+

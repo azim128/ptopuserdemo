@@ -2,11 +2,14 @@
 import {  Row, Col } from '@/components/ReactBootstrap';
 
 ;
-import MobileCanvas from './MobileCanvas';
+
 import Sidebar from './Sidebar';
 import Chatbody from './Chatbody';
 
 const ChatWrapper= () => {
+
+ 
+  
   
   return (
     <div >

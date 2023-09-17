@@ -3,13 +3,16 @@ import axios from 'axios';
 import { toast } from 'react-toastify';
 import { Container } from "@/components/ReactBootstrap";
 import AuthContext from '@/context/AuthContext';
-import styles from './multiform.module.css'
+import styles from './multiform.module.css';
+import { useRouter } from 'next/navigation'
 const serverUrl = process.env.NEXT_PUBLIC_SERVER_URL;
+
 const OrderForm = () => {
-  const { user,tokens } = useContext(AuthContext);
+  const router = useRouter()
+  const { user, tokens } = useContext(AuthContext);
   const [orderData, setOrderData] = useState({
     order_email: '',
-    Amount: '',
+    amount: '',
     purpose: 'pay',
   });
 
@@ -25,24 +28,30 @@ const OrderForm = () => {
     e.preventDefault();
 
     try {
-      if (!orderData.order_email || !orderData.Amount || !orderData.purpose) {
+      if (!orderData.order_email || !orderData.amount || !orderData.purpose) {
         toast.error('Please fill in all required fields');
         return;
       }
 
-      const response = await axios.post(
-        `https://${serverUrl}/api/order/create-order/buy//?Accept=application/json&access_token=${tokens}`,
+      // Client-side validation for amount
+      if (parseInt(orderData.amount) < 20) {
+        toast.error('Amount must be at least 20');
+        return;
+      }
+
+      await axios.post(
+        `https://${serverUrl}/api/order/create-order/buy/?Accept=application/json&access_token=${tokens}`,
         {
           order_email: orderData.order_email,
-          Amount: orderData.Amount,
+          amount: orderData.amount,
           purpose: orderData.purpose,
-          coin: '1',
+          coin: 1, // Make sure to use the correct data type here
           method: 'buy',
         }
       );
 
       toast.success('Order created successfully');
-      // You can also reset the form here if needed
+      router.push('/chat')
     } catch (error) {
       if (error.response && error.response.data && error.response.data.errors) {
         const errorKeys = Object.keys(error.response.data.errors);
@@ -56,38 +65,38 @@ const OrderForm = () => {
 
   return (
     <Container style={{ minHeight: "75vh" }}>
-    <div className={styles.wrapper}>
-      <form onSubmit={handleSubmit}>
-      <label htmlFor="order_email">Order Email:</label>
-        <input
-          type="email"
-          name="order_email"
-          value={orderData.order_email}
-          onChange={handleChange}
-          placeholder="Email"
-        />
-        <label htmlFor="Amount">Amount:</label>
-        <input
-          type="number"
-          name="Amount"
-          min={20}
-          value={orderData.Amount}
-          onChange={handleChange}
-          placeholder="Buy Amount"
-        />
-        <label htmlFor="purpose">Purpose:</label>
-        <input
-          type="text"
-          name="purpose"
-          value={orderData.purpose}
-          onChange={handleChange}
-          placeholder="Purpose"
-        />
-        <button type="submit" className={styles.submitbtn } disabled={!user}>
-          Create Order
-        </button>
-      </form>
-    </div>
+      <div className={styles.wrapper}>
+        <form onSubmit={handleSubmit}>
+          <label htmlFor="order_email">Order Email:</label>
+          <input
+            type="email"
+            name="order_email"
+            value={orderData.order_email}
+            onChange={handleChange}
+            placeholder="Email"
+          />
+          <label htmlFor="amount">Amount:</label>
+          <input
+            type="number"
+            name="amount"
+            min={20}
+            value={orderData.amount}
+            onChange={handleChange}
+            placeholder="Buy Amount"
+          />
+          <label htmlFor="purpose">Purpose:</label>
+          <input
+            type="text"
+            name="purpose"
+            value={orderData.purpose}
+            onChange={handleChange}
+            placeholder="Purpose"
+          />
+          <button type="submit" className={styles.submitbtn} disabled={!user}>
+            Create Order
+          </button>
+        </form>
+      </div>
     </Container>
   );
 };
