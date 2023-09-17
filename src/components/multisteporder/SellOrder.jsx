@@ -4,10 +4,12 @@ import { toast } from 'react-toastify';
 import { Container } from 'react-bootstrap';
 import styles from './multiform.module.css';
 import AuthContext from '@/context/AuthContext';
+import { useRouter } from 'next/navigation';
 
 const serverUrl = process.env.NEXT_PUBLIC_SERVER_URL;
 
 const OrderForm = () => {
+  const router = useRouter()
   const { user, tokens } = useContext(AuthContext);
   const [orderData, setOrderData] = useState({
     amount: 20,
@@ -32,17 +34,6 @@ const OrderForm = () => {
         toast.error('Please fill in all required fields');
         return;
       }
-
-      // Client-side validation for TRC20 and BEP20 addresses
-      // if (orderData.walletType === 'trc20' ) {
-      //   toast.error('Invalid TRC20 address');
-      //   return;
-      // }
-
-      // if (orderData.walletType === 'bep20' ) {
-      //   toast.error('Invalid BEP20 address');
-      //   return;
-      // }
       if(tokens){
       await axios.post(
         `https://${serverUrl}/api/order/create-order/sell/?Accept=application/json&access_token=${tokens}`,
@@ -56,7 +47,6 @@ const OrderForm = () => {
           method: 'sell',
         }
       );
-
       toast.success('Order created successfully');
       router.push('/chat')
       }
@@ -64,7 +54,8 @@ const OrderForm = () => {
       if (error.response && error.response.data && error.response.data.errors) {
         const errorKeys = Object.keys(error.response.data.errors);
         const errorMessage = error.response.data.errors[errorKeys[0]][0];
-        toast.error(errorMessage);
+        console.log(errorMessage);
+
       } else {
         toast.error('An error occurred while creating the order');
       }

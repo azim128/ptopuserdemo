@@ -22,7 +22,7 @@ const Chatbody = () => {
   const [modalImageSrc, setModalImageSrc] = useState(null);
 
   const messagesContainerRef = useRef();
-  console.log(messages)
+  // console.log(messages)
 
   useEffect(() => {
     if (user && tokens) {
