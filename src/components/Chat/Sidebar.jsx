@@ -26,7 +26,7 @@ const Sidebar = () => {
       {/* <h4 className="ps-5 text-light">Your Order List</h4> */}
       <ul className="list-unstyled ps-2">
       {falseStateData && falseStateData.map(item => (
-        <li className={`ps-4 py-4 ${styles.orderitem} text-light`}>
+        <li className={`ps-4 py-4 ${styles.orderitem} text-light`} key={crypto.randomUUID()}>
         
             Amount: {item?.amount} USDT<br />
             Method: {item?.method}<br />

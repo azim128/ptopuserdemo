@@ -35,7 +35,7 @@ function MobileCanvas() {
       
       <ul className="list-unstyled">
       {falseStateData && falseStateData.map(item => (
-        <li className={`ps-4 py-2 ${styles.orderitem} text-light`}>
+        <li className={`ps-4 py-2 ${styles.orderitem} text-light`}  key={crypto.randomUUID()}>
         Account Details: {item?.account_details}<br />
             Amount: {item?.amount}<br />
             Method: {item?.method}<br />
