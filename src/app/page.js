@@ -21,7 +21,10 @@ export default async function Home() {
         </header>
         <Hero />
 
-        <Container className="my-5 py-5">
+        <Container className="mb-5 pb-5">
+          <Row className="justify-content-center">
+            <h1 className="text-white text-center mb-5 pb-5">All Payment Method</h1>
+          </Row>
           <Row className="justify-content-center">
             {data?.map((coin) => (
               

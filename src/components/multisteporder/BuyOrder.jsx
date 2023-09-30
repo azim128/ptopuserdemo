@@ -5,14 +5,17 @@ import { Container } from "@/components/ReactBootstrap";
 import AuthContext from '@/context/AuthContext';
 import styles from './multiform.module.css';
 import { useRouter } from 'next/navigation'
+import ChatContext from '@/context/ChatContext';
 const serverUrl = process.env.NEXT_PUBLIC_SERVER_URL;
 
 const OrderForm = () => {
   const router = useRouter()
   const { user, tokens } = useContext(AuthContext);
+  
+  const {currencyA} = useContext(ChatContext)
   const [orderData, setOrderData] = useState({
-    order_email: '',
-    amount: '',
+    order_email: user.email||'',
+    amount: currencyA,
     purpose: 'pay',
   });
 
@@ -81,7 +84,7 @@ const OrderForm = () => {
           <input
             type="number"
             name="amount"
-            min={20}
+            min={50}
             value={orderData.amount}
             onChange={handleChange}
             placeholder="Buy Amount"

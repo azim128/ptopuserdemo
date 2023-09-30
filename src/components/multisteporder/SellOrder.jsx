@@ -5,14 +5,16 @@ import { Container } from 'react-bootstrap';
 import styles from './multiform.module.css';
 import AuthContext from '@/context/AuthContext';
 import { useRouter } from 'next/navigation';
+import ChatContext from '@/context/ChatContext';
 
 const serverUrl = process.env.NEXT_PUBLIC_SERVER_URL;
 
 const OrderForm = () => {
   const router = useRouter()
   const { user, tokens } = useContext(AuthContext);
+  const {currencyA} = useContext(ChatContext)
   const [orderData, setOrderData] = useState({
-    amount: 20,
+    amount: currencyA,
     walletType: '',
     address: '',
     feeOption: 'binance', // Default fee option
@@ -72,7 +74,7 @@ const OrderForm = () => {
           <input
             type="number"
             name="amount"
-            min={20}
+            min={50}
             value={orderData.amount}
             onChange={handleChange}
             placeholder="Buy Amount"

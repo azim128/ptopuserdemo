@@ -1,6 +1,6 @@
 'use client'
 import { createContext, useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import Cookies from 'js-cookie';
 import { toast } from "react-toastify";
 import useSWR from 'swr';
@@ -11,7 +11,9 @@ export default AuthContext;
 
 export const AuthProvider = ({ children }) => {
   const router = useRouter();
-
+  const searchParams = useSearchParams();
+  const search = searchParams.get("page");
+  // console.log('..................',search)
   const [authTokens, setAuthTokens] = useState(null);
   const [tokens, setTokens] = useState(null);
   const [user, setUser] = useState(null);
@@ -93,7 +95,14 @@ export const AuthProvider = ({ children }) => {
         Cookies.set("user", JSON.stringify(data.profile_data), { expires: 7 });
         Cookies.set("token", JSON.stringify(data.token.access), { expires: 7, sameSite: "none", secure: true });
         toast.success("Logged in successfully!");
-        router.push("/");
+        if(search==='buy'){
+          router.push("/coindetails/1?page=buy")
+        }else if(search==='sell'){
+          router.push("/coindetails/1?page=sell")
+        }else{
+          router.push("/");
+        }
+        
       } else {
         if (data && data.errors) {
           // Extract the first error message from the 'errors' object

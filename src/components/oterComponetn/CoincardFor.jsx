@@ -14,8 +14,8 @@ const TwoCardSection = () => {
             <Card.Text className="text-light">
               Service Coming Soon.
             </Card.Text>
-            <Button variant="dark" className="me-2 disablebutton" disabled>Buy</Button>
-            <Button variant="dark" className="ms-2 disablebutton" disabled>Sell</Button>
+            <Button variant="dark" className="me-2 disablebutton text-warning" disabled>Buy</Button>
+            <Button variant="dark" className="ms-2 disablebutton text-warning" disabled>Sell</Button>
           </Card.Body>
           </Card>
         </Col>
@@ -27,8 +27,8 @@ const TwoCardSection = () => {
             <Card.Text className="text-light">
               Service Coming Soon.
             </Card.Text>
-            <Button variant="dark" className="me-2 disablebutton" disabled>Buy</Button>
-            <Button variant="dark" className="ms-2 disablebutton" disabled>Sell</Button>
+            <Button variant="dark" className="me-2 disablebutton text-warning" disabled>Buy</Button>
+            <Button variant="dark" className="ms-2 disablebutton text-warning" disabled>Sell</Button>
           </Card.Body>
           </Card>
         </Col>

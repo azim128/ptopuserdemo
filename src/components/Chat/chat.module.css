@@ -19,7 +19,7 @@
   align-items: center;
 }
 .navLink {
-  z-index: 1220;
+  z-index: 1045 !important;
 }
 
 .showChatbox {
@@ -191,6 +191,7 @@
   justify-content: space-between;
   align-items: center;
   margin: 0px 10px;
+  z-index: 99999 !important;
 }
 .hidebtn {
   cursor: pointer;
@@ -210,6 +211,8 @@
 }
 .bottom .orderitem {
   background: #0d141f;
+  margin:10px;
+  border-radius: 10px;
 }
 
 .upperSidebutton {

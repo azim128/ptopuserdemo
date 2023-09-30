@@ -260,5 +260,9 @@ height: 100%;
 border-radius: 5px;
 }
 
+/* modal background */
+.modal-content {
+  background: #0d151e !important;
+}
 
 

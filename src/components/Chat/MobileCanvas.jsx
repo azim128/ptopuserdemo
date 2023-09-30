@@ -10,7 +10,7 @@ function MobileCanvas() {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const {orderdata} = useContext(ChatContext)
-  const falseStateData = orderdata ? orderdata.data?.filter(item => item.state === false):[];
+  const falseStateData = orderdata ? orderdata.data.reverse():[];
   // console.log('see..............',falseStateData)
   return (
     <>
@@ -26,7 +26,7 @@ function MobileCanvas() {
       >
         <div className={`${styles.upperSideMobile} mt-2`}>
         <AiOutlineClose size={28} color="#fff" className={styles.hidebtn} onClick={handleClose}/>
-          <h3 className="text-center text-light">Last Order Details</h3>
+          <h5 className="text-center text-light">All Pending Order Details</h5>
         </div>
         <hr />
 
@@ -35,12 +35,18 @@ function MobileCanvas() {
       
       <ul className="list-unstyled">
       {falseStateData && falseStateData.map(item => (
-        <li className={`ps-4 py-2 ${styles.orderitem} text-light`}  key={crypto.randomUUID()}>
-        Account Details: {item?.account_details}<br />
-            Amount: {item?.amount}<br />
-            Method: {item?.method}<br />
-            Time: {item?.time?.slice(0,16)?.replace('T','  ')}<br />
-        </li>))}
+        <li className={`ps-4 py-4 ${styles.orderitem} text-light`} key={crypto.randomUUID()}>
+        
+        Amount: {item?.amount} USDT<br />
+        {item?.account_details!==null && <> Account details:{item.account_details} <br /></> }
+        {item?.bep20_address!==null && <> bep20 address:{item.bep20_address} <br /></> }
+        {item?.trc20_address!==null && <> bep20 address:{item.trc20_address} <br /></> }
+        {item?.order_email!==null && <> Order email:{item.order_email} <br /></> }
+        {item?.purpose!==null && <> Order email:{item.purpose} <br /></> }
+        Method: {item?.method}<br />
+        Time: {item?.time?.slice(0,16)?.replace('T','  ')}<br />
+    </li>))}
+   
        
       </ul>
       </div>

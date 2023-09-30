@@ -1,5 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 "use client";
+import useSWR from 'swr';
+import axios from 'axios';
+
 import { createContext, useContext, useEffect, useState } from "react";
 import AuthContext from "./AuthContext";
 const ChatContext = createContext();
@@ -11,51 +14,49 @@ export const ChatProvider = ({ children }) => {
 
   
 
-  const [orderdata, setorderData] = useState([]);
+
 
   // Modal
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
-  const fetchdata = async () => {
-    const encodedTokens = encodeURIComponent(tokens);
+  const fetcher = async (url) => {
     try {
-      const response = await fetch(
-        `https://${serverURL}/api/order/get-user-order/${user?.id}/1/`,
-        {
-          method: "GET",
-          headers: {
-            Authorization: `Bearer ${encodedTokens}`,
-            "Content-Type": "application/json",
-          },
-        }
-      );
-
-      if (!response.ok) {
-        throw new Error("Failed to fetch messages");
+      const response = await axios.get(url, {
+        headers: {
+          Authorization: `Bearer ${tokens}`,
+          'Content-Type': 'application/json',
+        },
+      });
+  
+      if (response.status !== 200) {
+        throw new Error('Failed to fetch data');
       }
-
-      const fetchedData = await response.json();
-      setorderData(fetchedData);
-    
-
-      // Handle the fetched data as needed here
+  
+      return response.data;
     } catch (error) {
-      console.error("Error fetching messages:", error);
+      throw new Error('Error fetching data: ' + error.message);
     }
   };
+  
+  const { data: orderdata, error } = useSWR(
+    user ? `https://${serverURL}/api/order/get-user-incompleted-order/${user.id}/1/` : null,
+    fetcher,{ refreshInterval: 1000 }
+  );
+  
 
-  useEffect(() => {
-    if(user&&tokens){
-    fetchdata();}
-  }, [user, tokens]);
-console.log(orderdata)
+
+
+// currency context
+const [currencyA, setCurrencyA] = useState(0);
+// console.log(currencyA)
   let contextData = {
     orderdata,
     show,
     handleClose,
     handleShow,
+    currencyA,setCurrencyA
   };
 
   return (

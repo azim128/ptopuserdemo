@@ -1,20 +1,22 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 "use client";
+import Cookies from 'js-cookie';
 import { Container, Row } from "react-bootstrap";
 import BasicNavbar from "../Navbar";
 import styles from '@/components/Singlecoin/sellBuyPage.module.css'
 import Image from "next/image";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import ModalBox from "../Model";
 import { FaUser, FaEnvelope, FaMoneyBillAlt, FaCheck } from "react-icons/fa";
 import { AiOutlineInfoCircle, AiOutlineWarning } from "react-icons/ai";
 import { VerticalTimeline, VerticalTimelineElement } from "react-vertical-timeline-component";
 import AboutUs from "../about/AboutUs";
+import ChatContext from '@/context/ChatContext';
 
 const serverUrl = process.env.NEXT_PUBLIC_SERVER_URL;
 
 const SellPage = ({data}) => {
-  const [currencyA, setCurrencyA] = useState(0);
+  const {currencyA, setCurrencyA} = useContext(ChatContext)
   const [currencyB, setCurrencyB] = useState(0);
   
 
@@ -23,6 +25,7 @@ const SellPage = ({data}) => {
     if (/^\d*\.?\d*$/.test(value)) {
       setCurrencyA(value);
       setCurrencyB(Number(value) * exchangeRate);
+      Cookies.set("inputcurrency", JSON.stringify(value));
     }
   };
 
@@ -80,8 +83,9 @@ const SellPage = ({data}) => {
             </div>
             <div className="col mx-auto my-5">
               <div className="d-flex flex-column gap-2 justify-content-center">
-                <div className="d-flex flex-column flex-sm-row justify-content-center gap-4  align-items-center">
+                <div className="d-flex flex-column justify-content-center gap-4  align-items-center">
                   <ModalBox title={'Sell via Web'}/>
+                  <h4 className="text-light">OR</h4>
                   <ModalBox title={'Exchance Direct Contact'}/>
                  
                 </div>

@@ -61,7 +61,7 @@ const SignIn = () => {
             Sign in
           </Button>
           <p className={`${styles.fromtext} my-3`}>
-            <Link href="/" className={styles.linktext}>
+            <Link href="/profile/forget" className={styles.linktext}>
               Forgot Password
             </Link>
           </p>

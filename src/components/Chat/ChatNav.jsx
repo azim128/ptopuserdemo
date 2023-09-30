@@ -1,7 +1,7 @@
 import Link from "next/link";
 import styles from "./chat.module.css";
 import MobileCanvas from "./MobileCanvas";
-import { Container, Nav, Navbar, Button } from "@/components/ReactBootstrap";
+import { Container, Nav, Navbar} from "@/components/ReactBootstrap";
 const ChatNav = () => {
   return (
     
