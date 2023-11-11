@@ -4,9 +4,9 @@ import { FaShieldAlt, FaCoins, FaUserFriends, FaComments, FaLightbulb } from "re
 
 const CardItem = ({ icon, title, content }) => {
   return (
-    <Card className="about-card text-center d-flex flex-column">
+    <Card className="about-card text-center d-flex flex-column text-light py-4" style={{background:"#0f101e"}}>
       <Card.Body>
-        <div className="about-icon mb-3">{icon}</div>
+        <div className="about-icon mb-3 text-light">{icon}</div>
         <Card.Title>{title}</Card.Title>
         <Card.Text>{content}</Card.Text>
       </Card.Body>
@@ -19,7 +19,7 @@ const AboutUs = () => {
     {
       icon: <FaShieldAlt size={55}/>,
       title: "Secure Transactions",
-      content: "Our platform employs robust security measures to ensure safe and secure transactions.",
+      content: "Our platform employs robust security to ensure safe and secure transactions.",
     },
     {
       icon: <FaCoins size={55}/>,
@@ -49,7 +49,7 @@ const AboutUs = () => {
   ];
 
   return (
-    <section id="about-us" className="py-5" style={{background:'#202123'}}>
+    <section id="about-us" className="py-5" style={{background:'#010314'}}>
       <div className="container">
         <h2 className="text-center mb-4 text-light">What is PTOP?</h2>
         <p className="text-center w-50 mx-auto text-light">PTOP operates as a global P2P marketplace, facilitating cryptocurrency trading worldwide.</p>

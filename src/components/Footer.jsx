@@ -5,7 +5,7 @@ import { AiFillFacebook, AiOutlineSend, AiFillYoutube } from 'react-icons/ai';
 
 const Footer = () => {
   return (
-    <footer className="text-light py-4 pt-5" style={{background:"#1f1f1f"}}>
+    <footer className="text-light py-4 pt-5" style={{background:"#0f101e"}}>
       <Container>
         <Row>
           <Col md={4}>

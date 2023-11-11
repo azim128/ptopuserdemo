@@ -43,7 +43,7 @@ const CardBox = ({coinLink}) => {
         </Card>
       </Col>
       <Col lg={6} className="h-100">
-        <Card className="text-center bg-dark ps-2 py-5  d-flex justify-content-center align-items-center position-relative" style={{height:"430px"}}>
+        <Card className="text-center ps-2 py-5  d-flex justify-content-center align-items-center position-relative" style={{height:"430px",background:"#0f101e"}}>
           <div className="cardContent">
             <h6 className={styles.subheading}>PAYONEER</h6>
             <Image

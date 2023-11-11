@@ -7,7 +7,7 @@ const TwoCardSection = () => {
     <Container>
       <Row >
         <Col md={6} sm={12} >
-          <Card className="rounded border bg-dark d-flex align-items-center justify-content-center flex-column gap-2 py-3">
+          <Card className="rounded border d-flex align-items-center justify-content-center flex-column gap-2 py-3" style={{background:"#0f101e"}}>
           <Card.Img variant="top" src="/paypal.png" style={{ height: '100px', width: '100px', objectFit: 'cover' }} className="border rounded-circle p-3" />
           <Card.Body className="mt-4 text-center">
             <Card.Title className="text-light mb-2">Paypal</Card.Title>
@@ -20,7 +20,7 @@ const TwoCardSection = () => {
           </Card>
         </Col>
         <Col md={6} sm={12} >
-          <Card className="rounded border bg-dark d-flex align-items-center justify-content-center flex-column gap-2 py-3">
+          <Card className="rounded border d-flex align-items-center justify-content-center flex-column gap-2 py-3" style={{background:"#0f101e"}}>
           <Card.Img variant="top" src="/weisenham.png" style={{ height: '100px', width: '100px', objectFit: 'cover' }} className="border rounded-circle p-3" />
           <Card.Body className="mt-4 text-center">
             <Card.Title className="text-light mb-2">Wise</Card.Title>

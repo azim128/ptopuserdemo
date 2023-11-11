@@ -96,10 +96,10 @@ const BuyPage = ({data}) => {
           </div>
         </Row>
       </Container>
-      <div style={{background:'#222'}}>
+      <div style={{background:'#010314'}}>
       <VerticalTimeline>
       {events.map((event, index) => (
-        <VerticalTimelineElement key={index} date={event.date} iconStyle={{ background: "#1f5297", color: "#fff" }} icon={event.icon}>
+        <VerticalTimelineElement key={index} date={event.date} contentStyle={{background: "#0f101e", color: "#fff"}} contentArrowStyle={{borderRight: '7px solid  #0f101e'}} iconStyle={{ background: "#010314", color: "#fff" }} icon={event.icon}>
           <h3 className="vertical-timeline-element-title">{event.title}</h3>
           <p>{event.content}</p>
         </VerticalTimelineElement>

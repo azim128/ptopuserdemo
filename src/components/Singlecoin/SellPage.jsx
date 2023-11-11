@@ -98,7 +98,7 @@ const SellPage = ({data}) => {
       <div>
       <VerticalTimeline>
       {events.map((event, index) => (
-        <VerticalTimelineElement key={index} date={event.date} iconStyle={{ background: "#1f5297", color: "#fff" }} icon={event.icon}>
+        <VerticalTimelineElement key={index} date={event.date} iconStyle={{ background: "#0f101e", color: "#fff" }} icon={event.icon}>
           <h3 className="vertical-timeline-element-title">{event.title}</h3>
           <p>{event.content}</p>
         </VerticalTimelineElement>
