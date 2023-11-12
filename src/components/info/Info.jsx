@@ -1,8 +1,8 @@
-import React from 'react'
+import styles from '@/components/info/info.module.css'
 
 const Info = () => {
   return (
-    <div className=" text-white  position-relative" style={{background:'#292a2d'}}>
+    <div className={`text-white  position-relative ${styles.marqueeContainer}`}>
         {/* <div className="position-absolute bg-info py-2 px-5 marquee">AlERT</div> */}
         <marquee className="py-1 d-flex align-items-center marqueeText">
           “PTOP” is a trademark of Eaton Consulting FZE. Eaton Consulting

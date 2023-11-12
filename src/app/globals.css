@@ -26,23 +26,9 @@ a {
   background: var(--main-bg) !important;
 }
 
-.active{
-  color: #211b40;
-  border-bottom: 2px solid #211b40;
-  transition: all ;
-}
 
-.marquee {
-  height: 100%;
-  background: red !important;
-  z-index: 100;
-  display: flex;
-  align-items: center;
-  
-}
-.marqueeText{
-  font-size: 12px;
-}
+
+
 
 /* Disable button */
 .disablebutton{
@@ -50,99 +36,11 @@ a {
   padding: 8px 34px !important;
 }
 
-.signinbutton {
-  font-weight: 500;
-  color: #090909 !important;
-  background: #fabb04 !important;
-  border: 1px solid #fabb04 !important;
-  padding-left: 20px !important;
-  padding-right: 20px !important;
-  border-radius: 4px !important;
-  transition: 0.5s !important;
-  position: relative !important;
-  z-index: 1;
-  margin: 0 5px !important;
-}
-.signupbutton {
-  font-weight: 500 !important;
-  color: #fabb04 !important;
-  background: #090909 !important;
-  border: 1px solid #fabb04 !important;
-  padding-left: 20px !important;
-  padding-right: 20px !important;
-  border-radius: 4px !important;
-  transition: 0.5s !important;
-  position: relative !important;
-  z-index: 1;
-  margin: 0 5px !important;
-}
-
-.signinbutton:hover {
-  color: #fff !important;
-}
-.signupbutton:hover {
-  color: #fff !important;
-}
-
-.signinbutton::before {
-  position: absolute !important;
-  content: "";
-  z-index: -1;
-  left: 0;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  border-radius: 4px;
-  background: #131218;
-  transform: scale(0);
-  transition: 0.5s;
-}
-
-.signinbutton:hover::before {
-  transform: scale(1);
-}
-
-.signinbutton::after {
-  position: absolute;
-  content: "";
-  z-index: 1;
-  left: 0;
-  top: -22px;
-  width: 39%;
-  height: 24%;
-  box-shadow: 16px 36px 26px #21b68f;
-}
 
 
-/* navbar */
-.mainNav{
-  background: transparent !important;
-    position: relative;
-    z-index: 444;
-    padding: 10px auto;
-    border-bottom: 1px solid rgb(154,153,166,0.3)
- 
-}
-.sticky {
-  left: 0;
-  margin: auto;
-  position: fixed !important;
-  top: 0;
-  width: 100%;
-  -webkit-box-shadow: 0 2px 5px -2px rgba(0, 0, 0, 0.1);
-  box-shadow: 0 2px 5px -2px rgba(0, 0, 0, 0.1);
-  background: #202123 !important;
-  transition: .5s;
-  z-index: 999;
-  border: 0;
-}
 
-/* Hero section */
 
-.hero-section{
-  background: #222;
-    
-}
+
 
 /* width */
 ::-webkit-scrollbar {
@@ -167,62 +65,6 @@ a {
 
 
 
-/* Footer */
-/* Footer.css */
-
-/* .footer-section {
-  /* Custom styles for the entire footer section */
-/* } */ 
-
-.footer-section h3 {
-  font-size: 20px;
-  color: #fff;
-  margin-bottom: 15px;
-}
-
-.footer-section p {
-  font-size: 14px;
-  color: #ccc;
-  margin-bottom: 10px;
-}
-
-.footer-section a {
-  color: #fff;
-  text-decoration: none;
-}
-
-.footer-section a:hover {
-  color: #fabb04;
-}
-
-.footer-section ul {
-  list-style: none;
-  padding: 0;
-}
-
-.footer-section li {
-  margin-bottom: 5px;
-}
-
-/* Custom styles for the social media icons */
-.footer-section .social-icon {
-  font-size: 24px;
-  margin-right: 10px;
-  display: flex;
-}
-
-/* Custom styles for each social media icon */
-.footer-section .facebook-icon {
-  color: #3b5998;
-}
-
-.footer-section .telegram-icon {
-  color: #0088cc;
-}
-
-.footer-section .youtube-icon {
-  color: #c4302b;
-}
 
 /* Add any other custom styles as needed */
 /* commob btn */
@@ -269,72 +111,5 @@ border-radius: 5px;
   background: #0d151e !important;
 }
 
-
-
-
-/* loading component css */
-
-
-
-.skeleton {
-  padding:15px;
-  max-width: 100%;
-  width: 100%;
-  background: #0f101e;
-  margin-bottom: 20px;
-  border-radius: 5px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  box-shadow: 0 3px 4px 0 rgba(0, 0, 0, .14), 0 3px 3px -2px rgba(0, 0, 0, .2), 0 1px 8px 0 rgba(0, 0, 0, .12);
-}
-.skeleton .square {
-  height: 80px;
-  border-radius: 5px;
-  background: rgba(130, 130, 130, 0.2);
-  background: -webkit-gradient(linear, left top, right top, color-stop(8%, rgba(130, 130, 130, 0.2)), color-stop(18%, rgba(130, 130, 130, 0.3)), color-stop(33%, rgba(130, 130, 130, 0.2)));
-  background: linear-gradient(to right, rgba(130, 130, 130, 0.2) 8%, rgba(130, 130, 130, 0.3) 18%, rgba(130, 130, 130, 0.2) 33%);
-  background-size: 800px 100px;
-  animation: wave-squares 2s infinite ease-out;
-}
-.skeleton .line {
-  height: 12px;
-  margin-bottom:6px;
-  border-radius: 2px;
-  background: rgba(130, 130, 130, 0.2);
-  background: -webkit-gradient(linear, left top, right top, color-stop(8%, rgba(130, 130, 130, 0.2)), color-stop(18%, rgba(130, 130, 130, 0.3)), color-stop(33%, rgba(130, 130, 130, 0.2)));
-  background: linear-gradient(to right, rgba(130, 130, 130, 0.2) 8%, rgba(130, 130, 130, 0.3) 18%, rgba(130, 130, 130, 0.2) 33%);
-  background-size: 800px 100px;
-  animation: wave-lines 2s infinite ease-out;
-}
-.skeleton-right{
- flex:1;
-}
-.skeleton-left{
- flex:2;
- padding-right:15px;
-}
-
-.skeleton .line:last-child{
- margin-bottom: 0;
-}
-
-
-@keyframes wave-lines {
- 0% {
-     background-position: -468px 0;
- }
-  100% {
-     background-position: 468px 0;
- }
-}
-@keyframes wave-squares {
- 0% {
-     background-position: -468px 0;
- }
-  100% {
-     background-position: 468px 0;
- }
-}
 
 

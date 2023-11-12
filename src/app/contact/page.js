@@ -1,5 +1,5 @@
-import Footer from "@/components/Footer"
-import BasicNavbar from "@/components/Navbar"
+import Footer from "@/components/footer/Footer"
+import MainNavbar from "@/components/nav/Navbar"
 import ContactForm from "@/components/contact/ContactFrom"
 
 
@@ -7,7 +7,7 @@ const page = () => {
   return (
     <div className="hero-section">
      <header>
-        <BasicNavbar />
+        <MainNavbar />
       </header>
       <main>
         <ContactForm/>

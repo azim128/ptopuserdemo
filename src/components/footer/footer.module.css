@@ -1,0 +1,50 @@
+.footer-section h3 {
+    font-size: 20px;
+    color: #fff;
+    margin-bottom: 15px;
+  }
+  
+  .footer-section p {
+    font-size: 14px;
+    color: #ccc;
+    margin-bottom: 10px;
+  }
+  
+  .footer-section a {
+    color: #fff;
+    text-decoration: none;
+  }
+  
+  .footer-section a:hover {
+    color: #fabb04;
+  }
+  
+  .footer-section ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .footer-section li {
+    margin-bottom: 5px;
+  }
+  
+  /* Custom styles for the social media icons */
+.socialIcon {
+    font-size: 24px;
+    margin-right: 10px;
+    display: flex;
+  }
+  
+  /* Custom styles for each social media icon */
+  .footer-section .facebook-icon {
+    color: #3b5998;
+  }
+  
+  .footer-section .telegram-icon {
+    color: #0088cc;
+  }
+  
+  .footer-section .youtube-icon {
+    color: #c4302b;
+  }
+  

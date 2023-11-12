@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 'use client'
 
-import BasicNavbar from "@/components/Navbar"
+import MainNavbar from "@/components/nav/Navbar"
 import BuyOrder from "@/components/multisteporder/BuyOrder"
 import SellOrder from "@/components/multisteporder/SellOrder"
 import PrivateRoute from "@/helper/PrivateRoute"
@@ -20,7 +20,7 @@ const searchParams = useSearchParams()
     <PrivateRoute>
       <main className="hero-section" style={{minHeight:'100vh'}}>
    <header>
-        <BasicNavbar />
+        <MainNavbar />
       </header>
        
         {search==='sell'&&<SellOrder/>}

@@ -7,7 +7,8 @@ import styles from "@/components/profile/form.module.css";
 import { toast } from "react-toastify";
 import { IoIosMail } from "react-icons/io";
 import { useState } from "react";
-import BasicNavbar from "@/components/Navbar";
+import MainNavbar from "@/components/nav/Navbar";
+import Image from "next/image";
 const serverUrl = process.env.NEXT_PUBLIC_SERVER_URL;
 const SignIn = () => {
     const router = useRouter();
@@ -54,12 +55,15 @@ const SignIn = () => {
   return (
     <main className="hero-section" style={{minHeight:'100vh'}}>
    <header>
-        <BasicNavbar />
+        <MainNavbar />
       </header>
     <Container style={{ minHeight: "75vh" }}>
       <main className={styles.wrapper}>
         <Form onSubmit={handleForget}>
-          <h3 className="my-4 w-50 mx-auto h5 text-light">Reset password by email</h3>
+        <Link href={'/'}>
+            <Image src='/PTOP.png' height={40} width={100} alt="ptop-logo"></Image>
+          </Link>
+          <h6 className="my-4 w-50 mx-auto text-light">Reset password by email</h6>
 
           <div className={styles.IconDiv}>
             <input

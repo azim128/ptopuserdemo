@@ -20,7 +20,7 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <AuthProvider>
         <ChatProvider>
-      <body className={roboto.className}>
+      <body className={roboto.className} style={{background:"#010314"}}>
 
         {children}
         <ToastContainer autoClose='1000'/>

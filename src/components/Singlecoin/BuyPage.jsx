@@ -2,7 +2,7 @@
 "use client";
 import Cookies from 'js-cookie';
 import { Container, Row } from "react-bootstrap";
-import BasicNavbar from "../Navbar";
+
 import styles from '@/components/Singlecoin/sellBuyPage.module.css'
 import Image from "next/image";
 import { useContext, useState } from "react";
@@ -12,6 +12,7 @@ import { AiOutlineInfoCircle, AiTwotoneNotification, AiOutlineWarning } from "re
 import { VerticalTimeline, VerticalTimelineElement } from "react-vertical-timeline-component";
 import AboutUs from "../about/AboutUs";
 import ChatContext from '@/context/ChatContext';
+import MainNavbar from '@/components/nav/Navbar';
 
 const serverUrl = process.env.NEXT_PUBLIC_SERVER_URL;
 
@@ -41,17 +42,18 @@ const BuyPage = ({data}) => {
   return (
     <>
     <header>
-        <BasicNavbar />
+        <MainNavbar />
       </header>
       <Container>
         <Row>
           <div className="px-4 py-5 my-5 text-center">
             <Image
               className="d-block mx-auto mb-4"
-              src={`https://${serverUrl}${data.icon}`}
-              alt=""
-              width={216}
-              height={172}
+              src={`/Payoneerlogo.png`}
+              // src={`https://${serverUrl}${data.icon}`}
+              alt="logo"
+              width={316}
+              height={106}
             />
             <h1 className="display-5 fw-bold heading text-light ">
       

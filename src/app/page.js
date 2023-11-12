@@ -1,23 +1,23 @@
-import Hero from "@/components/Hero";
-import BasicNavbar from "@/components/Navbar";
-import Link from "next/link";
-import { Col, Container, Row } from "@/components/ReactBootstrap";
+import Hero from "@/components/hero/Hero";
+
+import { Container, Row } from "@/components/ReactBootstrap";
 import CardBox from "@/components/coinCard/CardBox";
-import Footer from "@/components/Footer";
+import Footer from "@/components/footer/Footer";
 import Info from "@/components/info/Info";
 import TwoCardSection from "@/components/oterComponetn/CoincardFor";
+import MainNavbar from "@/components/nav/Navbar";
 
 const serverUrl = process.env.NEXT_PUBLIC_SERVER_URL;
 
 export default async function Home() {
   const data = await getData();
-  console.log(data);
+  // console.log(data);
   return (
     <div>
       <Info />
       <main className="hero-section">
         <header>
-          <BasicNavbar />
+          <MainNavbar />
         </header>
         <Hero />
 

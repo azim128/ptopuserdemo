@@ -6,6 +6,7 @@ import { useContext, useState } from "react";
 import AuthContext from "@/context/AuthContext";
 import { toast } from "react-toastify";
 import { IoMdEye, IoMdEyeOff, IoIosMail } from "react-icons/io";
+import Image from "next/image";
 const SignIn = () => {
   const { loginUser } = useContext(AuthContext);
   const [showPassword, setShowPassword] = useState(false);
@@ -28,7 +29,10 @@ const SignIn = () => {
     <Container style={{ minHeight: "75vh" }}>
       <main className={styles.wrapper}>
         <Form onSubmit={handleLogin}>
-          <h1 className="my-4">Login to Your Account</h1>
+        <Link href={'/'}>
+            <Image src='/PTOP.png' height={40} width={100} alt="ptop-logo"></Image>
+          </Link>
+          <h6 className="my-4 text-light">Login to Your Account</h6>
 
           <div className={styles.IconDiv}>
             <input

@@ -6,6 +6,7 @@ import Link from "next/link";
 
 import { useContext, useState } from "react";
 import AuthContext from "@/context/AuthContext";
+import Image from "next/image";
 
 const SignUp = () => {
   const {handleSignup}=useContext(AuthContext)
@@ -23,10 +24,13 @@ const SignUp = () => {
   
 
   return (
-    <div>
+    <div >
       <main className={styles.wrapper}>
         <form onSubmit={handleSignup}>
-          <h1 className="my-4">Create Your Account</h1>
+        <Link href={'/'}>
+            <Image src='/PTOP.png' height={40} width={100} alt="ptop-logo"></Image>
+          </Link>
+          <h6 className="mt-2 mb-3 text-light">Create Your Account</h6>
 
           <div className={styles.IconDiv}>
             <input
@@ -82,7 +86,7 @@ const SignUp = () => {
           <button className={styles.submitbtn} type="submit">
             Sign up
           </button>
-          <p className={`${styles.fromtext}  my-3`}>If you have an account <Link href='/signin' className={styles.linktext}>Sign In</Link></p>
+          <p className={`${styles.fromtext}  my-3`}>If you have an account <Link href='/profile?page=signin' className={styles.linktext}>Sign In</Link></p>
         </form>
       </main>
     </div>

@@ -2,7 +2,7 @@
 "use client";
 import Cookies from 'js-cookie';
 import { Container, Row } from "react-bootstrap";
-import BasicNavbar from "../Navbar";
+import MainNavbar from "@/components/nav/Navbar";
 import styles from '@/components/Singlecoin/sellBuyPage.module.css'
 import Image from "next/image";
 import { useContext, useState } from "react";
@@ -41,17 +41,18 @@ const SellPage = ({data}) => {
   return (
     <>
     <header>
-        <BasicNavbar />
+        <MainNavbar />
       </header>
       <Container>
         <Row>
           <div className="px-4 py-5 my-5 text-center">
             <Image
               className="d-block mx-auto mb-4"
-              src={`https://${serverUrl}${data.icon}`}
-              alt=""
-              width={216}
-              height={172}
+              src={`/Payoneerlogo.png`}
+              // src={`https://${serverUrl}${data.icon}`}
+              alt="logo"
+              width={316}
+              height={106}
             />
             <h1 className="display-5 fw-bold heading text-light">
               Exchange Rate : {exchangeRate}

@@ -1,0 +1,100 @@
+/* navbar */
+.mainNav{
+    background: transparent !important;
+      position: relative;
+      z-index: 444;
+      padding: 10px auto;
+      /* border-bottom: 1px solid rgb(154,153,166,0.3) */
+  }
+  .sticky {
+    left: 0;
+    margin: auto;
+    position: fixed !important;
+    top: 0;
+    width: 100%;
+    -webkit-box-shadow: 0 2px 5px -2px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 5px -2px rgba(0, 0, 0, 0.1);
+    background: #202123 !important;
+    transition: .5s;
+    z-index: 999;
+    border: 0;
+  }
+
+  .active{
+    transition: all ;
+  }
+
+  .signinbutton {
+    font-weight: 500;
+    color: #090909 !important;
+    background: #fabb04 !important;
+    border: 1px solid #fabb04 !important;
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+    border-radius: 4px !important;
+    transition: 0.5s !important;
+    position: relative !important;
+    z-index: 1;
+    margin: 0 5px !important;
+  }
+  .languageSelectContainer {
+    font-weight: 500 !important;
+    color: #fabb04 !important;
+    background: #090909 !important;
+    border: 1px solid #fabb04 !important;
+    border-radius: 4px !important;
+    transition: 0.5s !important;
+    position: relative !important;
+    z-index: 1;
+    margin: 0 5px !important;
+  }
+  .languageSelectBox {
+    font-weight: 500 !important;
+    color: #fabb04 !important;
+    background: #090909 !important;
+    border: none;
+    outline: none;
+    border-radius: 4px !important;
+    transition: 0.5s !important;
+    position: relative !important;
+    z-index: 1;
+    margin: 0 5px !important;
+  }
+  
+  .signinbutton:hover {
+    color: #fff !important;
+  }
+  .languageSelectBox:hover {
+    color: #fff !important;
+    border: none;
+  }
+  
+  .signinbutton::before {
+    position: absolute !important;
+    content: "";
+    z-index: -1;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: 4px;
+    background: #131218;
+    transform: scale(0);
+    transition: 0.5s;
+  }
+  
+  .signinbutton:hover::before {
+    transform: scale(1);
+  }
+  
+  .signinbutton::after {
+    position: absolute;
+    content: "";
+    z-index: 1;
+    left: 0;
+    top: -22px;
+    width: 39%;
+    height: 24%;
+    box-shadow: 16px 36px 26px #21b68f;
+  }
+  

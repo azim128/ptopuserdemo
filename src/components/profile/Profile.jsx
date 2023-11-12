@@ -6,7 +6,7 @@ import Link from "next/link";
 import { useContext, useEffect, useState } from "react";
 
 const Profile = () => {
-  const {logoutUser} =useContext(AuthContext)
+  const { logoutUser } = useContext(AuthContext);
   const [parsedUser, setParsedUser] = useState(null);
   useEffect(() => {
     const user = Cookies.get("user");
@@ -28,13 +28,19 @@ const Profile = () => {
             <Card.Body>
               <Card.Title>{parsedUser?.name}</Card.Title>
               <Card.Text>{parsedUser?.email}</Card.Text>
-              <Button variant="primary" onClick={logoutUser}>Logout</Button>
+              <Button variant="primary" onClick={logoutUser}>
+                Logout
+              </Button>
             </Card.Body>
           </Card>
-        ):<div className="d-flex flex-column justify-content-center align-items-center "><h1 className="mb-5">You are Not Logged In. Login first</h1>
-        <Button variant="primary" >
-        <Link href={'/profile?page=signin'}>Sign In</Link></Button>
-        </div>}
+        ) : (
+          <div className="d-flex flex-column justify-content-center align-items-center ">
+            <h1 className="mb-5">You are Not Logged In. Login first</h1>
+            <div className="btn btn-primary">
+              <Link href={"/profile?page=signin"}>Sign In</Link>
+            </div>
+          </div>
+        )}
       </main>
     </Container>
   );
